@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-text color="light">
+        <ion-text color="light" class="fw700">Time Table </ion-text>
+      </ion-text>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="medium" (click)="notifications()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge color="dark" slot="end">2</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-card no-margin class="no-radius">
+    <ion-item lines="none" color="medium">
+      <ion-label>
+        <h2 no-margin color="primary" class="fw500 no-margin">
+
+        </h2>
+
+
+      </ion-label>
+      <ion-button fill="outline" size="small" color="primary"  (click)="checked = !checked;" >
+        Filter
+        <ion-icon src="../../../assets/img/funnel-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+ 
+
+    <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
+    <ion-item color="medium">  
+      <ion-label class="input-info-label">Select Batch</ion-label>  
+      <ion-select [interfaceOptions]="customPopoverOptions" multiple="true"  interface="popover" placeholder="Select One">  
+          <ion-select-option  value="1">1</ion-select-option>  
+          <ion-select-option value="2">2</ion-select-option>  
+          <ion-select-option value="3">3</ion-select-option>  
+          <ion-select-option value="4">4</ion-select-option>  
+          <ion-select-option value="5">5</ion-select-option>  
+          <ion-select-option value="6">6</ion-select-option>  
+          <ion-select-option value="7">7</ion-select-option>  
+          <ion-select-option value="8">8</ion-select-option>  
+          <ion-select-option value="9">9</ion-select-option>  
+          <ion-select-option value="10">10</ion-select-option>  
+       
+      </ion-select>  
+    </ion-item> 
+    <ion-item color="medium">
+      <ion-label class="input-info-label">Date Effective</ion-label>  
+      <ion-datetime displayFormat="DDDD, MMM DD YYYY"  ></ion-datetime>
+    </ion-item>
+  </div>
+  </ion-card>
+
+
+
+  <ion-list>
+    <ion-item *ngFor="let subitem of ctrl" lines="full">
+      <ion-label  >
+
+        <div class="lftdiv">
+          <p>
+            Batch
+          </p>
+        </div>
+        <div class="rightdiv">
+          <p>: {{subitem.Batch}}</p>
+        </div>
+        <div class="lftdiv">
+         <p>
+            Date Effective
+         </p>
+        </div>
+        <div class="rightdiv">
+          <p>: {{subitem.DateEffective}}</p>
+        </div>
+        <div class="lftdiv">
+         <p>
+            Status
+         </p>
+        </div>
+        <div class="rightdiv">
+         <p [ngClass]="subitem.StatusColor" >: {{subitem.Status}}</p>
+        </div>
+
+       
+
+        <div class="lftdiv">
+           <p>
+            Created at
+        </p>
+        </div>
+        <div class="rightdiv">
+          <p>: </p>
+        </div>
+
+        <div class="lftdiv">
+        <p>
+            Last Updated at
+         </p>
+        </div>
+        <div class="rightdiv">
+          <p>: </p>
+        </div>
+        <div class="lftdiv">
+          <p>
+             Description</p>
+            
+         </div>
+         <div class="rightdiv ion-text-wrap">
+           <p>: Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+         </div>
+      </ion-label>
+
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>

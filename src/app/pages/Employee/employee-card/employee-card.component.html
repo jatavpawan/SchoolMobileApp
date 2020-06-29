@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-text color="light">
+          <ion-text color="light" class="fw700">Employee Card</ion-text>
+        </ion-text>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="medium" (click)="notifications()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge color="dark" slot="end">2</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+   
+</ion-header>
+
+<ion-content>
+  <ion-card no-margin class="no-radius">
+    <ion-item lines="none" color="medium">
+      <ion-label>
+        <h2 no-margin color="primary" class="fw500 no-margin">
+
+        </h2>
+
+
+      </ion-label>
+      <ion-button fill="outline" size="small" color="primary"  (click)="checked = !checked;" >
+        Filter
+        <ion-icon src="../../../assets/img/funnel-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-item>
+     
+    <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
+      <ion-item  color="medium">
+        <ion-label color="dark" position="stacked">Full Name:</ion-label>
+        <ion-input inputmode="text" placeholder="Ex..: Joe Doe" value=""></ion-input>
+      </ion-item>
+      <ion-item color="medium">  
+        <ion-label class="input-info-label">Select Department</ion-label>  
+        <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
+            <ion-select-option  value="1">Acedmic Department </ion-select-option>  
+            <ion-select-option value="2">HR Department</ion-select-option>  
+            <ion-select-option value="3">IT & Networking Department</ion-select-option>  
+            <ion-select-option value="4">Finance Department</ion-select-option>  
+        </ion-select>  
+      </ion-item> 
+      <ion-item color="medium">  
+        <ion-label class="input-info-label">Select Designation</ion-label>  
+        <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
+            <ion-select-option  value="1">Director </ion-select-option>  
+            <ion-select-option value="2">Manager</ion-select-option>  
+            <ion-select-option value="3">Principal</ion-select-option>  
+            <ion-select-option value="4">Post Graduate Teacher</ion-select-option>  
+            <ion-select-option value="5">Trained Graduate Teacher</ion-select-option>  
+            <ion-select-option value="6">Primary Teacher</ion-select-option>  
+          </ion-select>  
+      </ion-item> 
+      <ion-item color="medium">  
+        <ion-label class="input-info-label">Employee Group</ion-label>  
+        <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
+            <ion-select-option  value="1">Regular Employee </ion-select-option>  
+            <ion-select-option value="2">Adhoc Employee</ion-select-option>  
+            <ion-select-option value="3">Probation Employee</ion-select-option>  
+            
+          </ion-select>  
+      </ion-item> 
+      <ion-item color="medium">  
+        <ion-label class="input-info-label">Status</ion-label>  
+        <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
+            <ion-select-option  value="1">Active </ion-select-option>  
+            <ion-select-option value="2">In-Active</ion-select-option>  
+            
+          </ion-select>  
+      </ion-item> 
+       
+  </div>
+  </ion-card>
+
+
+  <ion-card class="card-dta" *ngFor="let I of ctrl">
+    <ion-item   (click)="doProfile()">
+      <ion-avatar >
+        <img *ngIf="I.gender=='m'" src="../../../../assets/img/avatar_male.png">
+        <img *ngIf="I.gender=='f'" src="../../../../assets/img/avatar_female.png">
+      </ion-avatar>
+      <ion-label><p>{{I.empCode}} {{I.age}}</p>
+        <h3>{{I.employeeName}}</h3>
+        
+        <p class="nowrappre"> <ion-icon name="school"></ion-icon>
+          {{I.Class}} 
+        </p>
+        <span *ngIf='I.IsAlloted' class="label label-success">Alloted</span>
+          <span *ngIf='!I.IsAlloted' class="label label-Danger" >Rejected</span> 
+        </ion-label>
+    </ion-item>
+    <ion-footer>
+      <ion-row>
+        <ion-col >
+         
+            {{I.gardian}}
+          
+        </ion-col>
+         
+        <ion-col class="txtright" end>
+          <button>
+          <ion-icon name="call" (click)="Calltonum(I.gardianMobile)"></ion-icon>
+            {{I.gardianMobile}}
+         </button>
+        </ion-col>
+      </ion-row>
+    </ion-footer>
+  
+  </ion-card>
+
+
+
+</ion-content>

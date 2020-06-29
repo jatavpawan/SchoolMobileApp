@@ -1,0 +1,73 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-text color="light">
+          <ion-text color="light" class="fw700">Class Teacher </ion-text>
+        </ion-text>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="medium" (click)="notifications()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge color="dark" slot="end">2</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+   
+</ion-header>
+
+<ion-content>
+  <ion-card no-margin class="no-radius">
+   
+     
+    <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
+    <ion-item color="medium">  
+      <ion-label class="input-info-label">Select Course</ion-label>  
+      <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
+          <ion-select-option  value="1">Nursary </ion-select-option>  
+          <ion-select-option value="2">LKG</ion-select-option>  
+          <ion-select-option value="3">UKG</ion-select-option>  
+          <ion-select-option value="4">Grade I</ion-select-option>  
+          <ion-select-option value="5">Grade II</ion-select-option>  
+          <ion-select-option value="6">Grade III</ion-select-option>  
+          <ion-select-option value="7">Grade IV</ion-select-option>  
+          <ion-select-option value="8">Grade V</ion-select-option>  
+          <ion-select-option value="9">Grade VI</ion-select-option>  
+          <ion-select-option value="10">Grade VII</ion-select-option>  
+          <ion-select-option value="11">Grade VIII</ion-select-option>  
+          <ion-select-option value="12">Grade IX</ion-select-option>  
+          <ion-select-option value="13">Grade X</ion-select-option>  
+          <ion-select-option value="14">Grade XI</ion-select-option>  
+          <ion-select-option value="15">Grade XII</ion-select-option>  
+          
+      </ion-select>  
+    </ion-item> 
+   
+  </div>
+  </ion-card>
+
+
+  <ion-card *ngFor="let I of ctrl">
+    <ion-item color="medium">  
+<h4>{{I.course}}</h4>
+</ion-item>
+    <ion-card-header  *ngFor="let subitem of I.section">
+        
+      <ion-card-title>Subject</ion-card-title>
+      <ion-card-subtitle>{{subitem.Section}}</ion-card-subtitle>
+      <ion-card-title> Class Teacher</ion-card-title>
+      <ion-card-subtitle>{{subitem.CurrentSubjectTeacher}}</ion-card-subtitle>
+      <ion-card-title> Class Teacher History</ion-card-title>
+      <ion-card-subtitle><p  *ngFor="let s of subitem.SubjectTeacherHistory">{{s.history}}</p></ion-card-subtitle>
+     
+    </ion-card-header>
+  
+  
+  </ion-card>
+
+
+
+</ion-content>

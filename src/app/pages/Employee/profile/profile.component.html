@@ -1,0 +1,174 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-text color="light">
+          <ion-text color="light" class="fw700">Employee Profile </ion-text>
+        </ion-text>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="medium" (click)="notifications()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge color="dark" slot="end">2</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+   
+</ion-header>
+
+<ion-content>
+  <ion-card (click)="expandItem(0)" >
+    <ion-card-header>
+      <ion-card-title>
+        <div class="lft">
+       <i class="fas fa-graduation-cap"></i> </div>
+       <div class="rght">  {{items[0].title}} </div></ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-emp_expandable expandHeight="auto" [expanded]="items[0].expanded">
+        
+        <ion-label>
+         <h2>First Name</h2> 
+         </ion-label>
+        <p> {{items[0].data.FirstName}}</p>
+        <ion-label>
+         <h2>  Middle Name</h2>
+         </ion-label>
+        <p> {{items[0].data.MiddleName}}</p>
+        <ion-label>
+          <h2>  Last Name</h2>
+          </ion-label>
+         <p> {{items[0].data.LastName}}</p>
+       
+        <ion-label>
+          <h2> Gender </h2>
+          </ion-label>
+         <p> {{items[0].data.Gender}}</p>
+         <ion-label>
+          <h2> Date of Birth </h2>
+          </ion-label>
+         <p> {{items[0].data.DOB}}</p>
+      <ion-label>
+          <h2> Birth Place </h2>
+          </ion-label>
+         <p> {{items[0].data.BirthPlace}}</p>
+      <ion-label>
+          <h2> Unique Identifiation Number </h2>
+          </ion-label>
+         <p> {{items[0].data.UIN}}</p>
+      <ion-label>
+          <h2> Nationality </h2>
+          </ion-label>
+         <p> {{items[0].data.Nationality}}</p>
+      <ion-label>
+          <h2> MotherTongue </h2>
+          </ion-label>
+         <p> {{items[0].data.MotherTongue}}</p>
+      <ion-label>
+          <h2>cast  </h2>
+          </ion-label>
+         <p> {{items[0].data.cast}}</p>
+      <ion-label>
+          <h2> category </h2>
+          </ion-label>
+         <p> {{items[0].data.category}}</p>
+      <ion-label>
+          <h2> religion </h2>
+          </ion-label>
+         <p> {{items[0].data.religion}}</p>
+      <ion-label>
+          <h2> Blood Group </h2>
+          </ion-label>
+         <p> {{items[0].data.BloodGroup}}</p>
+       
+      </app-emp_expandable>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card (click)="expandItem(1)" >
+    <ion-card-header>
+      <ion-card-title>
+        <div class="lft">
+        <i class="fas fa-address-book"></i> </div>
+       <div class="rght">  {{items[1].title}}  </div></ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-emp_expandable expandHeight="100px" [expanded]="items[1].expanded">
+        <ion-label>
+          <h2>{{items[1].title}} Data </h2> 
+          </ion-label>
+         <p>  </p>
+         
+      </app-emp_expandable>
+    </ion-card-content>
+  </ion-card>
+
+ <ion-card (click)="expandItem(2)" >
+    <ion-card-header>
+      <ion-card-title>
+        <div class="lft">
+          <i  class='fas fa-university'> </i> </div>
+       <div class="rght">  {{items[2].title}} </div></ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-emp_expandable expandHeight="100px" [expanded]="items[2].expanded">
+        <ion-label>
+          <h2>{{items[2].title}} Data </h2> 
+          </ion-label>
+         <p></p>
+         
+      </app-emp_expandable>
+    </ion-card-content>
+  </ion-card>
+
+<ion-card (click)="expandItem(3)" >
+    <ion-card-header>
+      <ion-card-title>
+        <div class="lft">
+       <i class="fas fa-sign-in-alt"></i> </div>
+       <div class="rght">  {{items[3].title}}  </div></ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-emp_expandable expandHeight="100px" [expanded]="items[3].expanded">
+        <ion-label>
+          <h2>{{items[3].title}} Data </h2> 
+          </ion-label>
+         <p></p>
+         
+      </app-emp_expandable>
+    </ion-card-content>
+  </ion-card>
+
+
+<ion-card (click)="expandItem(4)" >
+    <ion-card-header>
+      <ion-card-title>
+        <div class="lft"><i   class='fas fa-sm fa-user-plus'> </i> 
+         </div>
+       <div class="rght">  {{items[4].title}}  </div></ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-emp_expandable expandHeight="100px" [expanded]="items[4].expanded">
+        <ion-label>
+          <h2>{{items[4].title}} Data </h2> 
+          </ion-label>
+         <p></p>
+         
+      </app-emp_expandable>
+    </ion-card-content>
+  </ion-card>
+ 
+
+
+
+
+  
+</ion-content>
