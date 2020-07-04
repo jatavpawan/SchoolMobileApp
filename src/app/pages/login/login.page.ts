@@ -30,12 +30,14 @@ export class LoginPage implements OnInit {
 
     this.onLoginForm = this.formBuilder.group({
       'email': [null, Validators.compose([
-        Validators.required
+        Validators.required,
+        // Validators.email,
       ])],
       'password': [null, Validators.compose([
         Validators.required
       ])]
     });
+    debugger;
   }
 
   async forgotPass() {
@@ -103,15 +105,19 @@ export class LoginPage implements OnInit {
     }
 
       this.authService.loginUser(submitObj).subscribe(resp=>{
+        debugger;
         if(resp.status == "success"){
           this.authService.setToken(resp.token);
           this.authService.setUserdata(resp.user);
           this.navCtrl.navigateRoot('/home-results');
         }
         else{
-          alert(resp.message);
+          alert("Email and Password not matched");
         }
-    })    
+      }, error =>{
+        debugger;
+        alert(error.error.errors.email_or_username[0]);
+      })    
      }
   }
 

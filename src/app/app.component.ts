@@ -15,6 +15,7 @@ import { AuthenticationService } from './services/authservice/authentication.ser
 export class AppComponent {
 
   public appPages: Array<Pages>;
+  expandMenuItemIndex: number = -1;
 
   constructor(
     private platform: Platform,
@@ -142,5 +143,9 @@ export class AppComponent {
   logout() {
     this.authService.logout();
     // this.navCtrl.navigateRoot('/');
+  }
+  expandMenuItem(index){
+    this.expandMenuItemIndex == index ? this.expandMenuItemIndex = -1 : this.expandMenuItemIndex = index;
+    
   }
 }

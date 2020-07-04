@@ -42,8 +42,15 @@ export class AuthenticationService {
       return <Observable<any>> this.dataService.postData('auth/login', data);
     }
     
-    getTimeTableList(){
-      return <Observable<any>> this.dataService.getData(`timetable?page=1&sort_by=date_effective&order=desc&batch_id=&show_session_name=true&show_session_timing=true&show_session_subject_name=true&show_session_teacher_name=true&page_length=10`);
+    getTimeTableList(batchIds, dateEffective){
+
+        if(dateEffective !=  ''){
+            return <Observable<any>> this.dataService.getData(`timetable?page=1&sort_by=date_effective&order=desc&batch_id=${batchIds}&date_effective=${dateEffective}&show_session_name=true&show_session_timing=true&show_session_subject_name=true&show_session_teacher_name=true&page_length=10`);
+        }
+        else{
+            return <Observable<any>> this.dataService.getData(`timetable?page=1&sort_by=date_effective&order=desc&batch_id=${batchIds}&show_session_name=true&show_session_timing=true&show_session_subject_name=true&show_session_teacher_name=true&page_length=10`);
+        }
+
    }
 
    data(){
