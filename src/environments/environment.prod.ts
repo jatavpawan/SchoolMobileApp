@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiendpoint: 'https://rginfotechcta.com/api/'
+
 }

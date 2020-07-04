@@ -21,6 +21,7 @@
 
 <ion-content>
   <ion-card (click)="expandItem(0)" >
+  <!-- <ion-card data-toggle="collapse" data-target="#demo"> -->
     <ion-card-header>
       <ion-card-title>
         <div class="lft">
@@ -29,61 +30,62 @@
     </ion-card-header>
 
     <ion-card-content>
+    <!-- <ion-card-content id="demo" class="collapse"> -->
       <app-expandable expandHeight="auto" [expanded]="items[0].expanded">
-        
+        <br/>
         <ion-label>
          <h2>First Name</h2> 
          </ion-label>
-        <p> {{items[0].data.FirstName}}</p>
+        <p> {{studentDetail?.first_name == null ? '-' : studentDetail?.first_name}}</p>
         <ion-label>
          <h2>  Middle Name</h2>
          </ion-label>
-        <p> {{items[0].data.MiddleName}}</p>
+        <p> {{studentDetail?.middle_name == null ? '-' : studentDetail?.middle_name}}</p>
         <ion-label>
           <h2>  Last Name</h2>
           </ion-label>
-         <p> {{items[0].data.LastName}}</p>
+         <p> {{studentDetail?.last_name == null ? '-' : studentDetail?.last_name}}</p>
        
         <ion-label>
           <h2> Gender </h2>
           </ion-label>
-         <p> {{items[0].data.Gender}}</p>
+         <p> {{studentDetail?.gender == null ? '-' : studentDetail?.gender}}</p>
          <ion-label>
           <h2> Date of Birth </h2>
           </ion-label>
-         <p> {{items[0].data.DOB}}</p>
+         <p> {{studentDetail?.date_of_birth == null ? '-' : studentDetail?.date_of_birth|date : 'dd-MM-yyyy'}}</p>
       <ion-label>
           <h2> Birth Place </h2>
           </ion-label>
-         <p> {{items[0].data.BirthPlace}}</p>
+         <p> {{studentDetail?.birth_place == null ? '-' : studentDetail?.birth_place}}</p>
       <ion-label>
           <h2> Unique Identifiation Number </h2>
           </ion-label>
-         <p> {{items[0].data.UIN}}</p>
+         <p> {{studentDetail?.unique_identification_number == null ? '-' : studentDetail?.unique_identification_number}}</p>
       <ion-label>
           <h2> Nationality </h2>
           </ion-label>
-         <p> {{items[0].data.Nationality}}</p>
+         <p> {{studentDetail?.nationality == null ? '-' : studentDetail?.nationality}}</p>
       <ion-label>
           <h2> MotherTongue </h2>
           </ion-label>
-         <p> {{items[0].data.MotherTongue}}</p>
+         <p> {{studentDetail?.mother_tongue == null ? '-' : studentDetail?.mother_tongue}}</p>
       <ion-label>
           <h2>cast  </h2>
           </ion-label>
-         <p> {{items[0].data.cast}}</p>
+         <p> {{studentDetail?.caste == null ? '-' : studentDetail?.caste}}</p>
       <ion-label>
           <h2> category </h2>
           </ion-label>
-         <p> {{items[0].data.category}}</p>
+         <p> {{studentDetail?.category == null ? '-' : studentDetail?.category}}</p>
       <ion-label>
           <h2> religion </h2>
           </ion-label>
-         <p> {{items[0].data.religion}}</p>
+         <p> {{studentDetail?.religion?.name == null ? '-' : studentDetail?.religion?.name}}</p>
       <ion-label>
           <h2> Blood Group </h2>
           </ion-label>
-         <p> {{items[0].data.BloodGroup}}</p>
+         <p> {{studentDetail?.blood_group?.name == null ? '-' : studentDetail?.blood_group?.name}}</p>
        
       </app-expandable>
     </ion-card-content>
@@ -98,15 +100,95 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-expandable expandHeight="100px" [expanded]="items[1].expanded">
+      <app-expandable expandHeight="auto" [expanded]="items[1].expanded">
+        <ion-label>
+          <h2>Relation</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent.first_guardian_relation ==null ? '-' : studentDetail?.parent.first_guardian_relation}}</p>
         <ion-label>
           <h2>First Gardian Name</h2> 
           </ion-label>
-         <p> {{items[1].data.FirstGardianName}}</p>
+         <p> {{studentDetail?.parent?.first_guardian_name ==null ? '-' : studentDetail?.parent?.first_guardian_name}}</p>
+         <ion-label>
+          <h2>First Guardian Date of Birth</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.first_guardian_date_of_birth ==null ? '-' : studentDetail?.parent?.first_guardian_date_of_birth|date : 'dd-MM-yyyy'}}</p>
+
+         <ion-label>
+          <h2>First Guardian Qualification</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.first_guardian_qualification ==null ? '-' : studentDetail?.parent?.first_guardian_qualification}}</p>
+
+         <ion-label>
+          <h2>First Guardian Occupation</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.first_guardian_occupation ==null ? '-' : studentDetail?.parent?.first_guardian_occupation}}</p>
+
+         <ion-label>
+          <h2>First Guardian Annual Income</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.first_guardian_annual_income ==null ? '-' : studentDetail?.parent?.first_guardian_annual_income}}</p>
+
+         <ion-label>
+          <h2>First Guardian Email</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.first_guardian_email ==null ? '-' : studentDetail?.parent?.first_guardian_email}}</p>
+
+         <ion-label>
+          <h2>First Guardian Contact Number 1</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.first_guardian_contact_number_1 ==null ? '-' : studentDetail?.parent?.first_guardian_contact_number_1}}</p>
+
+         <ion-label>
+          <h2>First Guardian Contact Number 2</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.first_guardian_contact_number_2 ==null ? '-' : studentDetail?.parent?.first_guardian_contact_number_2}}</p>
+
+        <ion-label>
+          <h2>First Guardian Unique Identification Number</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.first_guardian_unique_identification_number ==null ? '-' : studentDetail?.parent?.first_guardian_unique_identification_number}}</p>
+
+        <ion-label>
+          <h2>Relation</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_relation ==null ? '-' : studentDetail?.parent?.second_guardian_relation}}</p>
          <ion-label>
           <h2>Second Gardian Name</h2> 
           </ion-label>
-         <p> {{items[1].data.SecondGardianName}}</p>
+         <p> {{studentDetail?.parent?.second_guardian_name ==null ? '-' : studentDetail?.parent?.second_guardian_name}}</p>
+         <ion-label>
+          <h2>Second Guardian Date of Birth</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_date_of_birth ==null ? '-' : studentDetail?.parent?.second_guardian_date_of_birth|date : 'dd-MM-yyyy'}}</p>
+         <ion-label>
+          <h2>Second Guardian Qualification</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_qualification ==null ? '-' : studentDetail?.parent?.second_guardian_qualification}}</p>
+         <ion-label>
+          <h2>Second Guardian Occupation</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_occupation ==null ? '-' : studentDetail?.parent?.second_guardian_occupation}}</p>
+         <ion-label>
+          <h2>Second Guardian Annual Income</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_annual_income ==null ? '-' : studentDetail?.parent?.second_guardian_annual_income}}</p>
+         <ion-label>
+          <h2>Second Guardian Email</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_email ==null ? '-' : studentDetail?.parent?.second_guardian_email}}</p>
+         <ion-label>
+          <h2>Second Guardian Contact Number 1 </h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_contact_number_1 ==null ? '-' : studentDetail?.parent?.second_guardian_contact_number_1}}</p>
+         <ion-label>
+          <h2>Second Guardian Contact Number 2</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_contact_number_2 ==null ? '-' : studentDetail?.parent?.second_guardian_contact_number_2}}</p>
+         <ion-label>
+          <h2>Second Guardian Unique Identification Number</h2> 
+          </ion-label>
+         <p> {{studentDetail?.parent?.second_guardian_unique_identification_number ==null ? '-' : studentDetail?.parent?.second_guardian_unique_identification_number}}</p>
       </app-expandable>
     </ion-card-content>
   </ion-card>
@@ -120,11 +202,31 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-expandable expandHeight="100px" [expanded]="items[2].expanded">
+      <app-expandable expandHeight="auto" [expanded]="items[2].expanded">
         <ion-label>
-          <h2>{{items[2].title}} Data </h2> 
+          <h2>Contact Number</h2> 
           </ion-label>
-         <p></p>
+         <p> {{studentDetail?.contact_number == null ? '-': studentDetail?.contact_number}}</p>
+        <ion-label>
+          <h2>Email</h2> 
+          </ion-label>
+         <p> {{studentDetail?.email == null ? '-': studentDetail?.email}}</p>
+        <ion-label>
+          <h2>Emergency Contact Name</h2> 
+          </ion-label>
+         <p> {{studentDetail?.emergency_contact_name == null ? '-': studentDetail?.emergency_contact_name}}</p>
+        <ion-label>
+          <h2>Emergency Contact Number</h2> 
+          </ion-label>
+         <p> {{studentDetail?.emergency_contact_number == null ? '-': studentDetail?.emergency_contact_number}}</p>
+        <ion-label>
+          <h2>Present Address</h2> 
+          </ion-label>
+         <p> {{studentDetail?.present_address == null ? '-': studentDetail?.present_address}}</p>
+        <ion-label>
+          <h2>Permanent Address</h2> 
+          </ion-label>
+         <p> {{studentDetail?.permanent_address == "" ? "Same as Present Address" : studentDetail?.permanent_address}}</p>
          
       </app-expandable>
     </ion-card-content>
@@ -139,11 +241,11 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-expandable expandHeight="100px" [expanded]="items[3].expanded">
-        <ion-label>
-          <h2>{{items[3].title}} Data </h2> 
-          </ion-label>
-         <p></p>
+      <app-expandable expandHeight="auto" [expanded]="items[3].expanded">
+        <!-- <ion-label>
+          <h2>Relation</h2> 
+          </ion-label> -->
+         <p>No Result Found</p>
          
       </app-expandable>
     </ion-card-content>
@@ -159,11 +261,15 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-expandable expandHeight="100px" [expanded]="items[4].expanded">
+      <app-expandable expandHeight="auto" [expanded]="items[4].expanded">
         <ion-label>
-          <h2>{{items[4].title}} Data </h2> 
+          <h2>Enable Parent Login</h2> 
           </ion-label>
-         <p></p>
+         <p>No</p>
+        <ion-label> 
+         <h2>Enable Student Login</h2> 
+          </ion-label>
+         <p>No</p>
          
       </app-expandable>
     </ion-card-content>
@@ -179,11 +285,24 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-expandable expandHeight="100px" [expanded]="items[5].expanded">
+      <app-expandable expandHeight="auto" [expanded]="items[5].expanded">
         <ion-label>
-          <h2>{{items[5].title}} Data </h2> 
+          <h2>Adm No</h2> 
           </ion-label>
-         <p></p>
+         <p> {{studentDetail?.student_records[0].admission.admission_number == null ? '-' : studentDetail?.student_records[0].admission.admission_number}}</p>
+         <ion-label> 
+         <h2>Batch</h2> 
+          </ion-label>
+         <p> {{ studentDetail?.student_records[0].batch.course.name +' '+studentDetail?.student_records[0].batch.name }}</p>
+         <ion-label> 
+         <h2>Date of Admission</h2> 
+          </ion-label>
+         <p> {{studentDetail?.student_records[0].admission.date_of_admission|date : 'dd-MM-yyyy'}}</p>
+         <ion-label> 
+         <h2>Action</h2> 
+          </ion-label>
+         <p> <button class="btn btn-info btn-sm has-tooltip" data-original-title="null"><i class="fas fa-arrow-circle-right"></i> Fee
+         </button></p>
          
       </app-expandable>
     </ion-card-content>
@@ -199,11 +318,11 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-expandable expandHeight="100px" [expanded]="items[6].expanded">
-        <ion-label>
-          <h2>{{items[6].title}} Data </h2> 
-          </ion-label>
-         <p></p>  
+      <app-expandable expandHeight="auto" [expanded]="items[6].expanded">
+        <!-- <ion-label>
+          <h2></h2> 
+          </ion-label> -->
+         <p>No Result Found</p>
          
       </app-expandable>
     </ion-card-content>

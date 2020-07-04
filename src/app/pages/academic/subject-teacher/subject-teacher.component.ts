@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
 
 @Component({
   selector: 'app-subject-teacher',
@@ -41,10 +42,41 @@ export class SubjectTeacherComponent implements OnInit {
   //subHeader: 'Select number of persons',  
   class:"popover-contentss"
  // message: 'Only select your favorite flower'  
-}; 
-  constructor() { }
+};
+  batchList: Array<any>= [];
+  subjectTeacherList: Array<any>= [];
+  getResponse: boolean =  false;
+
+  constructor(private authService:AuthenticationService) { }
 
   ngOnInit() {
+    debugger;
+    this.authService.courseBatchList().subscribe(resp=>{
+      if(resp.status == "success"){
+        let batches: Array<any>; 
+        batches = resp.batches;
+        batches.forEach(batch =>{
+          this.batchList = [...this.batchList , ...batch.batches];
+        })
+        console.log("this.batchList", this.batchList);
+        this.subjectTeachersByBatchId(this.batchList[0].id)
+      }
+    });
+  }
+
+  subjectTeachersByBatchId(batchId){
+    debugger;
+    this.authService.subjectTeachersByBatchId(batchId).subscribe(resp =>{
+        this.subjectTeacherList =  resp;
+        this.getResponse = true; 
+    })
+  }
+
+  changeBatch(event){
+    debugger;
+    this.getResponse =  false;
+   let batchId = event.detail.value;
+   this.subjectTeachersByBatchId(batchId);
   }
 
 }

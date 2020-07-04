@@ -26,24 +26,9 @@
      
     <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
     <ion-item color="medium">  
-      <ion-label class="input-info-label">Select Course</ion-label>  
-      <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
-          <ion-select-option  value="1">Nursary </ion-select-option>  
-          <ion-select-option value="2">LKG</ion-select-option>  
-          <ion-select-option value="3">UKG</ion-select-option>  
-          <ion-select-option value="4">Grade I</ion-select-option>  
-          <ion-select-option value="5">Grade II</ion-select-option>  
-          <ion-select-option value="6">Grade III</ion-select-option>  
-          <ion-select-option value="7">Grade IV</ion-select-option>  
-          <ion-select-option value="8">Grade V</ion-select-option>  
-          <ion-select-option value="9">Grade VI</ion-select-option>  
-          <ion-select-option value="10">Grade VII</ion-select-option>  
-          <ion-select-option value="11">Grade VIII</ion-select-option>  
-          <ion-select-option value="12">Grade IX</ion-select-option>  
-          <ion-select-option value="13">Grade X</ion-select-option>  
-          <ion-select-option value="14">Grade XI</ion-select-option>  
-          <ion-select-option value="15">Grade XII</ion-select-option>  
-          
+      <ion-label class="input-info-label">Select Batch</ion-label>  
+      <ion-select [interfaceOptions]="customPopoverOptions" multiple="true" interface="popover" placeholder="Select One" (ionChange)="changeCourse($event)">  
+        <ion-select-option  [value]="batch.id" *ngFor="let batch of batchList">{{batch.name}} </ion-select-option>  
       </ion-select>  
     </ion-item> 
    
@@ -51,41 +36,66 @@
   </ion-card>
 
 
-  <ion-card class="card-dta" *ngFor="let I of ctrl">
-    <ion-item (click)="doProfile()">
+
+  <ion-card class="card-dta" *ngFor="let studentdata of students">
+    <ion-item (click)="doProfile(studentdata.student.uuid)">
       <ion-avatar >
-        <img *ngIf="I.gender=='m'" src="../../../../assets/img/avatar_male_kid.png">
-        <img *ngIf="I.gender=='f'" src="../../../../assets/img/avatar_female_kid.png">
+        <img *ngIf="studentdata.student.gender=='male'" src="../../../../assets/img/avatar_male_kid.png">
+        <img *ngIf="studentdata.student.gender=='female'" src="../../../../assets/img/avatar_female_kid.png">
       </ion-avatar>
-      <ion-label><p>{{I.age}}</p>
-        <h3>{{I.studentName}}</h3>
+      <ion-label><p>{{studentdata.admission.admission_number}} ({{studentdata.student.age.years+' Year '+studentdata.student.age.months+' Month'}})</p>
+        <h3>{{studentdata.student.name}}</h3>
         
         <p> <ion-icon name="school"></ion-icon>
-          {{I.Class}} 
+          {{studentdata.batch.course.name+' '+studentdata.batch.name}} 
         </p>
-        <span *ngIf='I.IsAlloted' class="label label-success">Alloted</span>
-          <span *ngIf='!I.IsAlloted' class="label label-Danger" >Rejected</span> 
+        <span *ngIf='studentdata.entry_remarks =="Seat allotted" ' class="label label-success">Alloted</span>
+          <span *ngIf='studentdata.entry_remarks !="Seat allotted" ' class="label label-Danger" >Rejected</span> 
         </ion-label>
     </ion-item>
     <ion-footer>
       <ion-row>
         <ion-col >
          
-            {{I.gardian}}
+            {{studentdata.full_roll_number}}
           
         </ion-col>
          
         <ion-col class="txtright" end>
           <button>
-          <ion-icon name="call" (click)="Calltonum(I.gardianMobile)"></ion-icon>
-            {{I.gardianMobile}}
+          <ion-icon name="call" (click)="Calltonum(studentdata.student.contact_number)"></ion-icon>
+            {{studentdata.student.contact_number}}
          </button>
         </ion-col>
       </ion-row>
     </ion-footer>
-  
+   
   </ion-card>
-
-
-
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+
+
+<!-- <ion-content>
+  <ion-button (click)="toggleInfiniteScroll()" expand="block">
+    Toggle Infinite Scroll
+  </ion-button>
+
+  <ion-list>
+    <ion-item *ngFor="let item of data; let i=index">
+      <ion-label>{{i+1}}. {{item.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+  
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content> -->

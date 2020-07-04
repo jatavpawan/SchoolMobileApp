@@ -3,9 +3,27 @@
     float: left;
     font-size: 22px;
 }
-h2{font-weight: bold; color: #00001a; font-size: 15pxs;}
+h2{ padding-top: 10px;; color: #00001a; font-size: 15pxs;}
 .rght{
       width: 90%;  float: right;  font-size: 17px;
  
 }
+ion-card-header.hydrated {
+    background-color: #dedede;
+    padding: 17px 0 33px 9px;
+}
+ion-card-content.card-content.card-content-md.hydrated {
+    background-color: #d6d4d42e;
+}
 
+
+// .btn-sm {
+//     padding: .5rem .75rem;;
+//     font-size: 12px;
+//     border-radius: 4px;
+// }
+// .btn-info {
+//     background: #009efb;
+//     border: 1px solid #009efb;
+//     color: #fff;
+// }

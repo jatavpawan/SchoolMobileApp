@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Pages } from './interfaces/pages';
+import { AuthenticationService } from './services/authservice/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public authService: AuthenticationService,
   ) {
     this.appPages = [
       // {
@@ -138,6 +140,7 @@ export class AppComponent {
   }
 
   logout() {
-    this.navCtrl.navigateRoot('/');
+    this.authService.logout();
+    // this.navCtrl.navigateRoot('/');
   }
 }

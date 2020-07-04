@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
 
 @Component({
   selector: 'app-time-table',
@@ -80,8 +81,7 @@ export class TimeTableComponent implements OnInit {
          StatusColor:'label label-Danger'
       },
       
-  ]   
-
+   ]
   
   customPopoverOptions: any = {  
    //header: 'Flower Name',  
@@ -89,10 +89,30 @@ export class TimeTableComponent implements OnInit {
    class:"popover-contentss"
   // message: 'Only select your favorite flower'  
  };  
+  timeTableList: any= [];
+  filter: any[] =[];
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService
+  ) { }
 
   ngOnInit() {
+    this.loadTimeTableList();
+  }
+
+  loadTimeTableList(){ 
+    debugger;
+     this.authService.getTimeTableList().subscribe(resp =>{
+       if(resp.status == "success"){
+        this.timeTableList = resp.timetables.data;
+        let batches: any[] = resp.filters.batches;
+
+        batches.forEach( item =>{
+            this.filter = [...this.filter, ...item.batches];
+        })
+
+       }
+     })
   }
 
 }

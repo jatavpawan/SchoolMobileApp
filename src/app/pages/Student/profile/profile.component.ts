@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShardServiceService } from 'src/app/services/shard-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,22 +9,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-studentID:number=0;
+studentID:string='';
   public items: any = [ { 
     title:'Basic Information',
     icon:'../../../assets/img/graduation-cap.svg',
     expanded: false,
-   data:{FirstName:'Pawan',MiddleName:'Kumar', LastName:'Jatav',
-  Gender:'Male',DOB:'23-07-2011', BirthPlace:'Raipur', UIN:'76547865543',
-   Nationality:'Indian',MotherTongue:'Hindi',cast:'Brahman', category:'genera', religion:'Hindu',BloodGroup:'O+'}
+   
   },
       {  title:'Parent Information',
       icon:'../../../assets/img/group.svg',
     expanded: false,
-  data:{
-    FirstGardianName:'Roshan Singh',SecondGardianName:'Chandani Singh'
-    
-  }
   },
       {  title:'Contact Information',
       icon:'../../../assets/img/address-book.svg',
@@ -41,8 +36,13 @@ studentID:number=0;
       icon:'../../../assets/img/file-alt.svg',
     expanded: false },  
      ];
+  studentDetail: any;
 
-  constructor( private activatedRoute: ActivatedRoute, private sharedservice: ShardServiceService) {
+  constructor( 
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthenticationService,
+    
+    ) {
     
   }
   ngOnInit() {
@@ -50,11 +50,11 @@ studentID:number=0;
     this.activatedRoute.params.subscribe(params => {
 
       this.studentID = params["id"];
-  
-
+      this.getStudentDetail(this.studentID);
     });
   }
   expandItem(indx): void {
+    debugger;
     // this.items.map(listItem => {          
     //         listItem.expanded = false;
           
@@ -73,6 +73,13 @@ studentID:number=0;
         return listItem;
       });
     }
+  }
+
+  getStudentDetail(id){
+    debugger;
+     this.authService.studentDetailByStudentId(id).subscribe(resp=>{
+       this.studentDetail = resp;
+     })
   }
 }
 

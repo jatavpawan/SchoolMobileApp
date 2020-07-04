@@ -40,7 +40,7 @@
     <ion-item color="medium">  
       <ion-label class="input-info-label">Select Batch</ion-label>  
       <ion-select [interfaceOptions]="customPopoverOptions" multiple="true"  interface="popover" placeholder="Select One">  
-          <ion-select-option  value="1">1</ion-select-option>  
+          <!-- <ion-select-option  value="1">1</ion-select-option>  
           <ion-select-option value="2">2</ion-select-option>  
           <ion-select-option value="3">3</ion-select-option>  
           <ion-select-option value="4">4</ion-select-option>  
@@ -49,7 +49,9 @@
           <ion-select-option value="7">7</ion-select-option>  
           <ion-select-option value="8">8</ion-select-option>  
           <ion-select-option value="9">9</ion-select-option>  
-          <ion-select-option value="10">10</ion-select-option>  
+          <ion-select-option value="10">10</ion-select-option>   -->
+          <ion-select-option [value]="item.id" *ngFor="let item of filter">{{item.name}}</ion-select-option>   -->
+
        
       </ion-select>  
     </ion-item> 
@@ -63,7 +65,7 @@
 
 
   <ion-list>
-    <ion-item *ngFor="let subitem of ctrl" lines="full">
+    <!-- <ion-item *ngFor="let subitem of ctrl" lines="full">
       <ion-label  >
 
         <div class="lftdiv">
@@ -118,6 +120,63 @@
          <div class="rightdiv ion-text-wrap">
            <p>: Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+         </div>
+      </ion-label>
+
+    </ion-item> -->
+    <ion-item *ngFor="let timeTable of timeTableList" lines="full">
+      <ion-label  >
+
+        <div class="lftdiv">
+          <p>
+            Batch
+          </p>
+        </div>
+        <div class="rightdiv">
+          <p>: {{timeTable.batch.course.name + ' '+ timeTable.batch.name}}</p>
+        </div>
+        <div class="lftdiv">
+         <p>
+            Date Effective
+         </p>
+        </div>
+        <div class="rightdiv">
+          <p>: {{timeTable.date_effective| date:'dd-MM-yyyy'}}</p>
+        </div>
+        <div class="lftdiv">
+         <p>
+            Status
+         </p>
+        </div>
+        <div class="rightdiv">
+         <p Class="label label-Danger" >: 0/0 Unallocated</p>
+        </div>
+
+       
+
+        <div class="lftdiv">
+           <p>
+            Created at
+        </p>
+        </div>
+        <div class="rightdiv">
+          <p>: {{timeTable.created_at| date:'dd-MM-yyyy HH:mm'}}</p>
+        </div>
+
+        <div class="lftdiv">
+        <p>
+            Last Updated at
+         </p>
+        </div>
+        <div class="rightdiv">
+          <p>: {{timeTable.updated_at| date:'dd-MM-yyyy HH:mm'}}</p>
+        </div>
+        <div class="lftdiv">
+          <p>Description</p>
+            
+         </div>
+         <div class="rightdiv ion-text-wrap">
+           <p>:{{timeTable.description}}</p>
          </div>
       </ion-label>
 

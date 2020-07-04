@@ -26,39 +26,33 @@
     <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
     <ion-item color="medium">  
       <ion-label class="input-info-label">Select Batch</ion-label>  
-      <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
-          <ion-select-option  value="1">Nursary section A</ion-select-option>  
-          <ion-select-option value="2">Nursary section B</ion-select-option>  
-          <ion-select-option value="3">LKG section A</ion-select-option>  
-          <ion-select-option value="4">LKG section B</ion-select-option>  
-          <ion-select-option value="5">LKG section C</ion-select-option>  
-          <ion-select-option value="6">UKG section A</ion-select-option>  
-          <ion-select-option value="7">UKG section B</ion-select-option>  
-          <ion-select-option value="8">UKG section C</ion-select-option>  
-          <ion-select-option value="9">Grade I section A</ion-select-option>  
-          <ion-select-option value="10">Grade I section B</ion-select-option>  
-       
+      <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One" (ionChange)="changeBatch($event)">  
+          <ion-select-option  [value]=batch?.id *ngFor="let batch of batchList">{{batch?.name}}</ion-select-option>  
       </ion-select>  
     </ion-item> 
    
   </div>
   </ion-card>
-
-
-  <ion-card *ngFor="let subitem of ctrl">
+<ng-container *ngIf="subjectTeacherList.length != 0">
+  <ion-card *ngFor="let subjectTeacher of subjectTeacherList">
     <ion-card-header >
       <ion-card-title>Subject</ion-card-title>
-      <ion-card-subtitle>{{subitem.Subject}}</ion-card-subtitle>
+      <ion-card-subtitle>{{subjectTeacher?.name}} ({{subjectTeacher?.code}})</ion-card-subtitle>
       <ion-card-title> Current Subject Teacher</ion-card-title>
-      <ion-card-subtitle>{{subitem.CurrentSubjectTeacher}}</ion-card-subtitle>
+      <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length !=0 ">{{subjectTeacher?.subject_teachers[0].employee.name}} ({{subjectTeacher?.subject_teachers[0].employee.employee_code}})</ion-card-subtitle>
+      <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length ==0 ">N/A</ion-card-subtitle>
       <ion-card-title> Subject Teacher History</ion-card-title>
-      <ion-card-subtitle><p  *ngFor="let s of subitem.SubjectTeacherHistory">{{s.history}}</p></ion-card-subtitle>
+      <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length !=0 "><p  *ngFor="let teacher of subjectTeacher?.subject_teachers">{{teacher?.employee.name}} ({{teacher?.employee.employee_code }}) from {{teacher?.date_effective|date:'dd-MM-yyyy' }}</p></ion-card-subtitle>
+      <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length ==0 "><p >N/A</p></ion-card-subtitle>
         
     </ion-card-header>
-  
-  
   </ion-card>
+</ng-container>
+
+<ng-container *ngIf="subjectTeacherList.length == 0 && getResponse == true">
+  <p class="no-data-found"> No Result Found</p>
+</ng-container>
 
 
-
+  
 </ion-content>
