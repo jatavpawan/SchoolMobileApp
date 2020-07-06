@@ -28,12 +28,12 @@
 
 
       </ion-label>
+      <ion-button fill="outline" size="small" color="primary" *ngIf="checked == true"  (click)="applyFilter()" >
+        Apply Filter
+      </ion-button>
       <ion-button fill="outline" size="small" color="primary"  (click)="checked = !checked;" >
         Filter
         <ion-icon src="../../../assets/img/funnel-outline.svg"></ion-icon>
-      </ion-button>
-      <ion-button fill="outline" size="small" color="primary" *ngIf="checked == true"  (click)="applyFilter()" >
-        Apply Filter
       </ion-button>
     </ion-item>
      

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, NavController } from '@ionic/angular';
+import { Platform, NavController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -21,7 +21,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public navCtrl: NavController,
+    public navCtrl: NavController,private menu: MenuController,
     public authService: AuthenticationService,
   ) {
     this.appPages = [
@@ -147,5 +147,11 @@ export class AppComponent {
   expandMenuItem(index){
     this.expandMenuItemIndex == index ? this.expandMenuItemIndex = -1 : this.expandMenuItemIndex = index;
     
+  }
+  togglemenu(){
+    setTimeout(() => {
+       this.menu.toggle();
+    }, 500);
+   
   }
 }
