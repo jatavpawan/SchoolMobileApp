@@ -54,7 +54,7 @@ studentID:string='';
     });
   }
   expandItem(indx): void {
-    debugger;
+    // debugger;
     // this.items.map(listItem => {          
     //         listItem.expanded = false;
           
@@ -76,7 +76,7 @@ studentID:string='';
   }
 
   getStudentDetail(id){
-    debugger;
+    // debugger;
      this.authService.studentDetailByStudentId(id).subscribe(resp=>{
        this.studentDetail = resp;
      })

@@ -50,7 +50,7 @@ export class SubjectTeacherComponent implements OnInit {
   constructor(private authService:AuthenticationService) { }
 
   ngOnInit() {
-    // debugger;
+    // // debugger;
     this.authService.courseBatchList().subscribe(resp=>{
       if(resp.status == "success"){
         let batches: Array<any>; 
@@ -65,7 +65,7 @@ export class SubjectTeacherComponent implements OnInit {
   }
 
   subjectTeachersByBatchId(batchId){
-    // debugger;
+    // // debugger;
     this.authService.subjectTeachersByBatchId(batchId).subscribe(resp =>{
         this.subjectTeacherList =  resp;
         this.getResponse = true; 
@@ -73,7 +73,7 @@ export class SubjectTeacherComponent implements OnInit {
   }
 
   changeBatch(event){
-    // debugger;
+    // // debugger;
     this.getResponse =  false;
    let batchId = event.detail.value;
    this.subjectTeachersByBatchId(batchId);

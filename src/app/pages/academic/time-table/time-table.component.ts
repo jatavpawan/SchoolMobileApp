@@ -104,7 +104,7 @@ export class TimeTableComponent implements OnInit {
   }
 
   loadTimeTableList(batchIds, dateEffective){ 
-    debugger;
+    // debugger;
      this.authService.getTimeTableList(batchIds, dateEffective).subscribe(resp =>{
        if(resp.status == "success"){
         this.getResponse = true;
@@ -121,7 +121,7 @@ export class TimeTableComponent implements OnInit {
 
   
   changeBatch(event){
-    debugger;
+    // debugger;
     // this.batchIds = '';
     this.filter=[];
     this.getResponse =  false;
@@ -130,7 +130,7 @@ export class TimeTableComponent implements OnInit {
   }
 
   changeDateEffective(event){
-     debugger;
+     // debugger;
     this.filter=[];
 
     // this.effectiveDate = '';

@@ -68,10 +68,10 @@ export class ClassTeacherComponent implements OnInit {
   }
 
   getClassTeacherList(courseId = ''){
-    // debugger;
+    // // debugger;
     this.authService.getClassTeacherList(courseId).subscribe(resp =>{
       if(resp.status == "success"){
-        // debugger;
+        // // debugger;
       //  let courses: Array<any>; 
        this.courses = resp.courses;
        this.courses.forEach(course =>{
@@ -82,7 +82,7 @@ export class ClassTeacherComponent implements OnInit {
        this.batchList = resp.batches;
        this.batchListArr =  this.batchList.filter( batch => batch.course_id >= 1 ).sort( (a,b) => a.course_id - b.course_id);;
        console.log("batchArr", this.batchListArr);
-      // debugger;
+      // // debugger;
        this.courseGroups.forEach(group=>{
        
           group.courses.forEach(course =>{
@@ -102,7 +102,7 @@ export class ClassTeacherComponent implements OnInit {
   
 
   changeCourse(event){
-    // debugger;
+    // // debugger;
   //  let courseId = (event.detail.value).toString();
    let courseId = (event.detail.value);
    if(this.filterApply == false) 

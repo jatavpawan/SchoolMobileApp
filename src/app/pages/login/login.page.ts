@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
         Validators.required
       ])]
     });
-    debugger;
+    // debugger;
   }
 
   async forgotPass() {
@@ -105,7 +105,7 @@ export class LoginPage implements OnInit {
     }
 
       this.authService.loginUser(submitObj).subscribe(resp=>{
-        debugger;
+        // debugger;
         if(resp.status == "success"){
           this.authService.setToken(resp.token);
           this.authService.setUserdata(resp.user);
@@ -115,7 +115,7 @@ export class LoginPage implements OnInit {
           alert("Email and Password not matched");
         }
       }, error =>{
-        debugger;
+        // debugger;
         alert(error.error.errors.email_or_username[0]);
       })    
      }

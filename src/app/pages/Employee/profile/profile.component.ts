@@ -82,7 +82,7 @@ employeeDetail: any;
 
   getEmployeeDetail(id){
      this.authService.EmployeeDetailByEmployeeId(id).subscribe(resp=>{
-       debugger;
+       // debugger;
        this.employeeDetail = resp;
      })
   }

@@ -83,7 +83,7 @@ this.navCtrl.navigateForward('student-profile/'+uuid);
   }
 
   loadStudentList(batchIds = '', pageNo =1){
-    debugger;
+    // debugger;
     
   
   this.getResponse =  false;
@@ -105,7 +105,7 @@ this.navCtrl.navigateForward('student-profile/'+uuid);
   }
 
   changeCourse(event){
-    debugger;
+    // debugger;
     this.infiniteScroll.disabled = false;
     this.currentPageno =1;
     this.students = [];
@@ -118,7 +118,7 @@ this.navCtrl.navigateForward('student-profile/'+uuid);
  
 
   loadData(event) {
-    debugger;
+    // debugger;
     // this.currentPageno = 2; 
     setTimeout(() => {
       console.log('Done');

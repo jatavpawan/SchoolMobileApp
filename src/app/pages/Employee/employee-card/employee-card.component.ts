@@ -116,7 +116,7 @@ export class EmployeeCardComponent implements OnInit {
 
   loadEmployeeList(first_name = '', middle_name = '', last_name = '', departmentIds = '', designationIds = '', employeeGroupIds = '', status = 'active', pageNo = 1) {
     // loadEmployeeList() {
-    debugger;
+    // debugger;
 
     this.getResponse = false;
     this.authService.EmployeeList(first_name, middle_name, last_name, departmentIds, designationIds, employeeGroupIds, status, pageNo).subscribe(resp => {
@@ -140,7 +140,7 @@ export class EmployeeCardComponent implements OnInit {
   }
 
   changeDepartment(event) {
-    debugger;
+    // debugger;
     // this.infiniteScroll.disabled = false;
     // this.currentPageno = 1;
     // this.employees = [];
@@ -151,7 +151,7 @@ export class EmployeeCardComponent implements OnInit {
 
   }
   changeDesignation(event) {
-    debugger;
+    // debugger;
     // this.infiniteScroll.disabled = false;
     // this.currentPageno = 1;
     // this.employees = [];
@@ -164,7 +164,7 @@ export class EmployeeCardComponent implements OnInit {
 
   }
   changeEmployeeGroup(event) {
-    debugger;
+    // debugger;
     // this.infiniteScroll.disabled = false;
     // this.currentPageno = 1;
     // this.employees = [];
@@ -177,7 +177,7 @@ export class EmployeeCardComponent implements OnInit {
 
   }
   changeStatus(event) {
-    debugger;
+    // debugger;
     // this.infiniteScroll.disabled = false;
     // this.currentPageno = 1;
     // this.employees = [];
@@ -193,7 +193,7 @@ export class EmployeeCardComponent implements OnInit {
 
 
   loadData(event) {
-    debugger;
+    // debugger;
     // this.currentPageno = 2; 
     setTimeout(() => {
       console.log('Done');
