@@ -25,7 +25,7 @@
       <ion-card-title>
         <div class="lft">
        <i class="fas fa-graduation-cap"></i> </div>
-       <div class="rght">  {{items[0].title}} </div></ion-card-title>
+       <div class="rght" >  {{items[0]?.title}} </div></ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -34,56 +34,68 @@
         <ion-label>
          <h2>First Name</h2> 
          </ion-label>
-        <p> {{items[0].data.FirstName}}</p>
+        <p> {{employeeDetail?.first_name == null ? '-' : employeeDetail?.first_name}}</p>
         <ion-label>
          <h2>  Middle Name</h2>
          </ion-label>
-        <p> {{items[0].data.MiddleName}}</p>
+        <p> {{employeeDetail?.middle_name == null ? '-' : employeeDetail?.middle_name}}</p>
         <ion-label>
           <h2>  Last Name</h2>
           </ion-label>
-         <p> {{items[0].data.LastName}}</p>
+         <p> {{employeeDetail?.last_name == null ? '-' : employeeDetail?.last_name}}</p>
        
         <ion-label>
           <h2> Gender </h2>
           </ion-label>
-         <p> {{items[0].data.Gender}}</p>
+         <p> {{employeeDetail?.gender == null ? '-' : employeeDetail?.gender}}</p>
+         <ion-label>
+          <h2>Marital Status</h2>
+          </ion-label>
+         <p> {{employeeDetail?.marital_status == null ? '-' : employeeDetail?.marital_status}}</p>
          <ion-label>
           <h2> Date of Birth </h2>
           </ion-label>
-         <p> {{items[0].data.DOB}}</p>
+         <p> {{employeeDetail?.date_of_birth == null ? '-' : employeeDetail?.date_of_birth|date : 'dd-MM-yyyy'}}</p>
       <ion-label>
-          <h2> Birth Place </h2>
+          <h2>Date of Anniversary</h2>
           </ion-label>
-         <p> {{items[0].data.BirthPlace}}</p>
+         <p> {{employeeDetail?.date_of_anniversary == null ? '-' : employeeDetail?.date_of_anniversary|date : 'dd-MM-yyyy'}}</p>
       <ion-label>
           <h2> Unique Identifiation Number </h2>
           </ion-label>
-         <p> {{items[0].data.UIN}}</p>
+         <p> {{employeeDetail?.unique_identification_number == null ? '-' : employeeDetail?.unique_identification_number}}</p>
+      <ion-label>
+          <h2>Father Name</h2>
+          </ion-label>
+         <p> {{employeeDetail?.father_name == null ? '-' : employeeDetail?.father_name}}</p>
+      <ion-label>
+          <h2>Mother Name</h2>
+          </ion-label>
+         <p> {{employeeDetail?.mother_name == null ? '-' : employeeDetail?.mother_name}}</p>
       <ion-label>
           <h2> Nationality </h2>
           </ion-label>
-         <p> {{items[0].data.Nationality}}</p>
+         <p> {{employeeDetail?.nationality == null ? '-' : employeeDetail?.nationality}}</p>
       <ion-label>
           <h2> MotherTongue </h2>
           </ion-label>
-         <p> {{items[0].data.MotherTongue}}</p>
+         <p> {{employeeDetail?.mother_tongue == null ? '-' : employeeDetail?.mother_tongue}}</p>
       <ion-label>
           <h2>cast  </h2>
           </ion-label>
-         <p> {{items[0].data.cast}}</p>
+         <p> {{employeeDetail?.caste == null ? '-' : employeeDetail?.caste}}</p>
       <ion-label>
           <h2> category </h2>
           </ion-label>
-         <p> {{items[0].data.category}}</p>
+         <p> {{employeeDetail?.category == null ? '-' : employeeDetail?.category}}</p>
       <ion-label>
           <h2> religion </h2>
           </ion-label>
-         <p> {{items[0].data.religion}}</p>
+         <p> {{employeeDetail?.religion == null ? '-' : employeeDetail?.religion}}</p>
       <ion-label>
           <h2> Blood Group </h2>
           </ion-label>
-         <p> {{items[0].data.BloodGroup}}</p>
+         <p> {{employeeDetail?.blood_group == null ? '-' : employeeDetail?.blood_group}}</p>
        
       </app-emp_expandable>
     </ion-card-content>
@@ -98,11 +110,39 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-emp_expandable expandHeight="100px" [expanded]="items[1].expanded">
+      <app-emp_expandable expandHeight="auto" [expanded]="items[1].expanded">
         <ion-label>
-          <h2>{{items[1].title}} Data </h2> 
+          <h2>Contact Number</h2> 
           </ion-label>
-         <p>  </p>
+         <p> {{employeeDetail?.contact_number == null ? '-' : employeeDetail?.contact_number}}</p>
+        <ion-label>
+          <h2>Alternate Contact Number</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.alternate_contact_number == null ? '-' : employeeDetail?.alternate_contact_number}}</p>
+        <ion-label>
+          <h2>Email</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.email == null ? '-' : employeeDetail?.email}}</p>
+        <ion-label>
+          <h2>Alternate Email</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.alternate_email == null ? '-' : employeeDetail?.alternate_email}}</p>
+        <ion-label>
+          <h2>Emergency Contact Name</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.emergency_contact_name == null ? '-' : employeeDetail?.emergency_contact_name}}</p>
+        <ion-label>
+          <h2>Emergency Contact Number</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.emergency_contact_number == null ? '-' : employeeDetail?.emergency_contact_number}}</p>
+        <ion-label>
+          <h2>Present Address</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.present_address == null || employeeDetail?.present_address == "" ? '-' : employeeDetail?.present_address}}</p>
+        <ion-label>
+          <h2>Permanent Address</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.permanent_address == null || employeeDetail?.permanent_address == "" ? '-' : employeeDetail?.permanent_address}}</p>
          
       </app-emp_expandable>
     </ion-card-content>
@@ -117,11 +157,11 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-emp_expandable expandHeight="100px" [expanded]="items[2].expanded">
+      <app-emp_expandable expandHeight="auto" [expanded]="items[2].expanded">
         <ion-label>
-          <h2>{{items[2].title}} Data </h2> 
+          <h2></h2> 
           </ion-label>
-         <p></p>
+         <p>No result found</p>
          
       </app-emp_expandable>
     </ion-card-content>
@@ -136,11 +176,11 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-emp_expandable expandHeight="100px" [expanded]="items[3].expanded">
+      <app-emp_expandable expandHeight="auto" [expanded]="items[3].expanded">
         <ion-label>
-          <h2>{{items[3].title}} Data </h2> 
+          <h2>Enable Employee Login</h2> 
           </ion-label>
-         <p></p>
+         <p>No</p>
          
       </app-emp_expandable>
     </ion-card-content>
@@ -156,18 +196,82 @@
     </ion-card-header>
 
     <ion-card-content>
-      <app-emp_expandable expandHeight="100px" [expanded]="items[4].expanded">
+      <app-emp_expandable expandHeight="auto" [expanded]="items[4].expanded">
         <ion-label>
-          <h2>{{items[4].title}} Data </h2> 
+          <h2>Designation</h2> 
           </ion-label>
-         <p></p>
+         <p> {{employeeDetail?.employee_designations[0]?.designation?.name == null ? '-' : employeeDetail?.employee_designations[0]?.designation?.name}}</p>
+        <ion-label>
+          <h2>Employee Category</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.employee_designations[0]?.designation?.employee_category?.name == null ? '-' : employeeDetail?.employee_designations[0]?.designation?.employee_category?.name}}</p>
+        <ion-label>
+          <h2>	Department</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.employee_designations[0].department.name == null ? '-' : employeeDetail?.employee_designations[0].department.name}}</p>
+        <ion-label>
+          <h2>Date Effective</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.employee_designations[0].date_effective == null ? '-' : employeeDetail?.employee_designations[0].date_effective}}</p>
+        <ion-label>
+          <h2>Date End</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.employee_designations[0].date_end == null ? '-' : employeeDetail?.employee_designations[0].date_end}}</p>
+        <ion-label>
+          <h2>Action</h2> 
+          </ion-label>
+         <p><button class="btn btn-info btn-sm has-tooltip" data-original-title="null"><i class="fas fa-arrow-circle-right"></i></button></p>
+         
+      </app-emp_expandable>
+    </ion-card-content>
+  </ion-card>
+
+<ion-card (click)="expandItem(5)" >
+    <ion-card-header>
+      <ion-card-title>
+        <div class="lft"><i   class='fas fa-sm fa-user-plus'> </i> 
+         </div>
+       <div class="rght">  {{items[5].title}}  </div></ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-emp_expandable expandHeight="auto" [expanded]="items[5].expanded">
+        <ion-label>
+          <h2>Date of Joining</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.employee_terms[0]?.date_of_joining == null ? '-' : employeeDetail?.employee_terms[0]?.date_of_joining}}</p>
+        <ion-label>
+          <h2>Date of Leaving</h2> 
+          </ion-label>
+         <p> {{employeeDetail?.employee_terms[0]?.date_of_leaving == null ? '-' : employeeDetail?.employee_terms[0]?.date_of_leaving}}</p>
+        <ion-label>
+          <h2>Action</h2> 
+          </ion-label>
+         <p><button class="btn btn-info btn-sm has-tooltip" data-original-title="null"><i class="fas fa-arrow-circle-right"></i></button></p>
          
       </app-emp_expandable>
     </ion-card-content>
   </ion-card>
  
 
+  <ion-card (click)="expandItem(6)" >
+    <ion-card-header>
+      <ion-card-title>
+        <div class="lft">
+          <i  class='fas fa-university'> </i> </div>
+       <div class="rght">  {{items[6].title}} </div></ion-card-title>
+    </ion-card-header>
 
+    <ion-card-content>
+      <app-emp_expandable expandHeight="auto" [expanded]="items[6].expanded">
+        <ion-label>
+          <h2></h2> 
+          </ion-label>
+         <p>No result found</p>
+         
+      </app-emp_expandable>
+    </ion-card-content>
+  </ion-card>
 
 
   

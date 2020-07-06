@@ -32,47 +32,63 @@
         Filter
         <ion-icon src="../../../assets/img/funnel-outline.svg"></ion-icon>
       </ion-button>
+      <ion-button fill="outline" size="small" color="primary" *ngIf="checked == true"  (click)="applyFilter()" >
+        Apply Filter
+      </ion-button>
     </ion-item>
      
     <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
       <ion-item  color="medium">
-        <ion-label color="dark" position="stacked">Full Name:</ion-label>
-        <ion-input inputmode="text" placeholder="Ex..: Joe Doe" value=""></ion-input>
+        <ion-label color="dark" position="stacked">First Name:</ion-label>
+        <ion-input inputmode="text" placeholder="Ex..: Ajay" value="" [(ngModel)]="first_name" ></ion-input>
+      </ion-item>
+      <ion-item  color="medium">
+        <ion-label color="dark" position="stacked">Middle Name:</ion-label>
+        <ion-input inputmode="text" placeholder="Ex..: Kumar" value="" [(ngModel)]="middle_name" ></ion-input>
+      </ion-item>
+      <ion-item  color="medium">
+        <ion-label color="dark" position="stacked">Last Name:</ion-label>
+        <ion-input inputmode="text" placeholder="Ex..: Soni" value="" [(ngModel)]="last_name" ></ion-input>
       </ion-item>
       <ion-item color="medium">  
         <ion-label class="input-info-label">Select Department</ion-label>  
-        <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
-            <ion-select-option  value="1">Acedmic Department </ion-select-option>  
+        <ion-select [interfaceOptions]="customPopoverOptions" multiple="true"  interface="popover" placeholder="Select One" (ionChange)="changeDepartment($event)">  
+            <ion-select-option  [value]="department?.id" *ngFor="let department of filters?.departments">{{department?.name}} </ion-select-option>  
+            <!-- <ion-select-option  value="1">Acedmic Department </ion-select-option>  
             <ion-select-option value="2">HR Department</ion-select-option>  
             <ion-select-option value="3">IT & Networking Department</ion-select-option>  
-            <ion-select-option value="4">Finance Department</ion-select-option>  
+            <ion-select-option value="4">Finance Department</ion-select-option>   -->
         </ion-select>  
       </ion-item> 
       <ion-item color="medium">  
         <ion-label class="input-info-label">Select Designation</ion-label>  
-        <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
-            <ion-select-option  value="1">Director </ion-select-option>  
+        <ion-select [interfaceOptions]="customPopoverOptions" multiple="true"  interface="popover" placeholder="Select One" (ionChange)="changeDesignation($event)">  
+            <ion-select-option  [value]="designation?.id" *ngFor="let designation of designationList">{{designation?.name}} </ion-select-option>  
+            <!-- <ion-select-option  value="1">Director </ion-select-option>  
             <ion-select-option value="2">Manager</ion-select-option>  
             <ion-select-option value="3">Principal</ion-select-option>  
             <ion-select-option value="4">Post Graduate Teacher</ion-select-option>  
             <ion-select-option value="5">Trained Graduate Teacher</ion-select-option>  
-            <ion-select-option value="6">Primary Teacher</ion-select-option>  
+            <ion-select-option value="6">Primary Teacher</ion-select-option>   -->
           </ion-select>  
       </ion-item> 
       <ion-item color="medium">  
         <ion-label class="input-info-label">Employee Group</ion-label>  
-        <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
-            <ion-select-option  value="1">Regular Employee </ion-select-option>  
+        <ion-select [interfaceOptions]="customPopoverOptions" multiple="true"  interface="popover" placeholder="Select One" (ionChange)="changeEmployeeGroup($event)">  
+            <ion-select-option  [value]="employee_group?.id" *ngFor="let employee_group of filters?.employee_groups">{{employee_group?.name}} </ion-select-option>  
+            <!-- <ion-select-option  value="1">Regular Employee </ion-select-option>  
             <ion-select-option value="2">Adhoc Employee</ion-select-option>  
-            <ion-select-option value="3">Probation Employee</ion-select-option>  
+            <ion-select-option value="3">Probation Employee</ion-select-option>   -->
             
           </ion-select>  
       </ion-item> 
       <ion-item color="medium">  
         <ion-label class="input-info-label">Status</ion-label>  
-        <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One">  
-            <ion-select-option  value="1">Active </ion-select-option>  
-            <ion-select-option value="2">In-Active</ion-select-option>  
+        <ion-select [interfaceOptions]="customPopoverOptions"   interface="popover" placeholder="Select One" (ionChange)="changeStatus($event)">  
+            <ion-select-option  value="active" >Active</ion-select-option>  
+            <ion-select-option  value="inactive" >In-Active</ion-select-option>  
+            <!-- <ion-select-option  value="1">Active </ion-select-option>  
+            <ion-select-option value="2">In-Active</ion-select-option>   -->
             
           </ion-select>  
       </ion-item> 
@@ -81,7 +97,8 @@
   </ion-card>
 
 
-  <ion-card class="card-dta" *ngFor="let I of ctrl">
+
+  <!-- <ion-card class="card-dta" *ngFor="let I of ctrl">
     <ion-item   (click)="doProfile()">
       <ion-avatar >
         <img *ngIf="I.gender=='m'" src="../../../../assets/img/avatar_male.png">
@@ -114,8 +131,60 @@
       </ion-row>
     </ion-footer>
   
-  </ion-card>
+  </ion-card> -->
 
+  <ion-card class="card-dta" *ngFor="let employeedata of employees">
+    <ion-item   (click)="doProfile(employeedata.uuid)">
+      <ion-avatar >
+        <img *ngIf="employeedata.gender=='male'" src="../../../../assets/img/avatar_male.png">
+        <img *ngIf="employeedata.gender=='female'" src="../../../../assets/img/avatar_female.png">
+      </ion-avatar>
+      <ion-label><p>{{employeedata.employee_code}} ({{employeedata.age.years+' Year '+employeedata.age.months+' Month'}})</p>
+        <h3>{{employeedata.name}}</h3>
+        
+        <p class="nowrappre"> <ion-icon name="school"></ion-icon>
+          {{employeedata.employee_designations[0].department.name+' '+employeedata.employee_designations[0].designation.name+' ('+employeedata.employee_designations[0].designation.employee_category.name+')' }} 
+        </p>
+        <span *ngIf='employeedata.employee_terms[0].date_of_leaving == null ' class="label label-success">Active</span>
+          <span *ngIf='employeedata.employee_terms[0].date_of_leaving != null ' class="label label-Danger" >Deactive</span> 
+        </ion-label>
+    </ion-item>
+    <ion-footer>
+      <ion-row>
+        <ion-col >
+         
+            {{employeedata.employee_terms[0].date_of_joining}}
+          
+        </ion-col>
+         
+        <ion-col class="txtright" end>
+          <button>
+          <ion-icon name="call" (click)="Calltonum(employeedata.contact_number)"></ion-icon>
+            {{employeedata.contact_number}}
+         </button>
+        </ion-col>
+      </ion-row>
+    </ion-footer>
+  
+  </ion-card>
+  
+  <ng-container *ngIf="employees.length == 0 && getResponse == true">
+    <p class="no-data-found"> No Result Found</p>
+  </ng-container>
+
+  <ng-container *ngIf="employees.length != 0 && getResponse == true">
+ 
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container>
+
+ 
+
+  
 
 
 </ion-content>

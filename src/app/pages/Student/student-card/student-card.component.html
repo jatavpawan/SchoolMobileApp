@@ -71,12 +71,22 @@
     </ion-footer>
    
   </ion-card>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+
+  <ng-container *ngIf="students.length == 0 && getResponse == true">
+    <p class="no-data-found"> No Result Found</p>
+  </ng-container>
+
+  <ng-container *ngIf="students.length != 0 && getResponse == true">
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container>
+
+
+
 </ion-content>
 
 

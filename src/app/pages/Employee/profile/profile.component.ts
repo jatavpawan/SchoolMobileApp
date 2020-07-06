@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShardServiceService } from 'src/app/services/shard-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,7 +9,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-studentID:number=0;
+employeeID:number=0;
+employeeDetail: any;
+
   public items: any = [ { 
     title:'Basic Information',
     icon:'../../../assets/img/graduation-cap.svg',
@@ -21,6 +24,7 @@ studentID:number=0;
       {  title:'Contact Information',
       icon:'../../../assets/img/address-book.svg',
     expanded: false },
+     
       {  title:'Account Information',
       icon:'../../../assets/img/people-carry.svg',
     expanded: false },
@@ -28,21 +32,31 @@ studentID:number=0;
       icon:'../../../assets/img/sign-in-alt.svg',
     expanded: false },
     
-     {  title:'Designation Report',
+     {  title:' Designation History',
       icon:'../../../assets/img/file-alt.svg',
     expanded: false },  
+     {  title:'Term History',
+      icon:'../../../assets/img/file-alt.svg',
+    expanded: false },  
+    {  title:'Qualification Information',
+    icon:'../../../assets/img/address-book.svg',
+  expanded: false },
      ];
 
-  constructor( private activatedRoute: ActivatedRoute, private sharedservice: ShardServiceService) {
-    
-  }
+     constructor( 
+      private activatedRoute: ActivatedRoute,
+      private authService: AuthenticationService,
+      
+      ) {
+      
+    }
   ngOnInit() {
 
+  
     this.activatedRoute.params.subscribe(params => {
 
-      this.studentID = params["id"];
-  
-
+      this.employeeID = params["id"];
+      this.getEmployeeDetail(this.employeeID);
     });
   }
   expandItem(indx): void {
@@ -65,6 +79,15 @@ studentID:number=0;
       });
     }
   }
+
+  getEmployeeDetail(id){
+     this.authService.EmployeeDetailByEmployeeId(id).subscribe(resp=>{
+       debugger;
+       this.employeeDetail = resp;
+     })
+  }
+
+
 }
 
  
