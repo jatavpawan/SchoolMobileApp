@@ -117,20 +117,8 @@ export class AppComponent {
         url: '/settings',
         direct: 'forward',
         icon: 'logo-reddit'
-      },
-      {
-        title: 'About',
-        url: '/about',
-        direct: 'forward',
-        icon: 'information-circle-outline'
-      },
-
-      {
-        title: 'App Settings',
-        url: '/settings',
-        direct: 'forward',
-        icon: 'cog'
-      } 
+      }
+       
     ];
 
     this.initializeApp();
