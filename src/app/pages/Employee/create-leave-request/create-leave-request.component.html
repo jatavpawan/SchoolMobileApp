@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-text color="light">
+        <ion-text color="light" class="fw700">Create Leave Request</ion-text>
+      </ion-text>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="medium" (click)="notifications()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge color="dark" slot="end">2</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed no-padding>
+    <ion-row>
+      <ion-col size="12" padding>
+
+        <ion-list margin-bottom>
+          <!-- <ion-item >
+            <ion-checkbox></ion-checkbox>
+            <ion-label class="text-1x">Apply Leave for Other Employee</ion-label>
+          </ion-item> -->
+
+          <form [formGroup]="requestLeaveForm" class="list-form">
+            <ion-item>
+              <ion-label color="dark">Employee</ion-label>
+              <ion-select formControlName="employeeId">
+                <ion-select-option [value]="employee.id" *ngFor="let employee of employees">{{employee.name}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <p ion-text class="text08" *ngIf="requestLeaveForm.get('employeeId').touched && requestLeaveForm.get('employeeId').hasError('required')">
+              <ion-text color="danger">
+                The Employee field is required.
+              </ion-text>
+            </p>
+            <ion-item>
+              <ion-label color="dark">Leave Type</ion-label>
+              <ion-select formControlName="leaveTypeId">
+                <ion-select-option [value]="leaveType.id" *ngFor="let leaveType of leave_types">{{leaveType.name}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <p ion-text class="text08" *ngIf="requestLeaveForm.get('leaveTypeId').touched && requestLeaveForm.get('leaveTypeId').hasError('required')">
+              <ion-text color="danger">
+                The Leave Type field is required.
+              </ion-text>
+            </p>
+            <ion-item>
+              <ion-label color="dark" position="stacked">Start Date</ion-label>
+              <ion-datetime displayFormat="DDDD, DD MMM YYYY" placeholder="Select Date" formControlName="startDate"></ion-datetime>
+
+            </ion-item>
+            <p ion-text class="text08" *ngIf="requestLeaveForm.get('startDate').touched && requestLeaveForm.get('startDate').hasError('required')">
+              <ion-text color="danger">
+                The Start Date field is required.
+              </ion-text>
+            </p>
+            <ion-item>
+              <ion-label color="dark" position="stacked">End Date</ion-label>
+              <ion-datetime displayFormat="DDDD, DD MMM YYYY" placeholder="Select Date" formControlName="endDate"></ion-datetime>
+            </ion-item>
+            <p ion-text class="text08" *ngIf="requestLeaveForm.get('endDate').touched && requestLeaveForm.get('endDate').hasError('required')">
+              <ion-text color="danger">
+                The End Date field is required.
+              </ion-text>
+            </p>
+            <ion-item>
+              <ion-label color="dark" position="stacked">Reason:</ion-label>
+              <ion-input inputmode="text" placeholder="Enter the Reason For Leave " formControlName="reason"></ion-input>
+            </ion-item>
+            <p ion-text class="text08" *ngIf="requestLeaveForm.get('reason').touched && requestLeaveForm.get('reason').hasError('required')">
+              <ion-text color="danger">
+                The Reason field is required.
+              </ion-text>
+            </p>
+          </form>
+
+          <ion-button color="secondary" class="upload-btn" (click)="fileSelect(files)">
+            <ion-icon class="fas fa-upload upload-icon"></ion-icon>
+            Upload Document
+          </ion-button>
+          <input type="file" style="display: none;" id="files" #files (change)="uploadFile(files)">
+
+          <ion-list>
+            <ion-chip color="secondary" *ngFor="let file of uploadedFileList">
+              <ion-icon class="fas fa-times" color="danger" (click)="removeUploadedFile(file)"></ion-icon>
+              <ion-label> {{file.file_info.size}} {{file.user_filename}}</ion-label>
+            </ion-chip>
+          </ion-list>
+
+        </ion-list>
+
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="full" [disabled]="!requestLeaveForm.valid" size="large" (click)="submitLeaveRequest()">Submit</ion-button>
+  </ion-toolbar>
+</ion-footer>

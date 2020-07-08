@@ -40,9 +40,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/Employee/profile/profile.module').then(m => m.profilePageModule),
        
-  }, {
+  }, 
+  {
     path: 'leave-request',    loadChildren: () =>      import('./pages/Employee/leave-request/leave-request.module').then(m => m.LeaveRequestPageModule),
-       
+  },
+  {
+    path: 'create-leave-request',    loadChildren: () =>      import('./pages/Employee/create-leave-request/create-leave-request.module').then(m => m.CreateLeaveRequestModule),
   },
 ];
 

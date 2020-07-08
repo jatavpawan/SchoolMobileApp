@@ -97,9 +97,16 @@ export class AppComponent {
           url: '/employee-card',
           direct: 'forward',
           icon: 'ribbon'
-        },{
+        },
+        {
           title: 'Leave Request',
           url: '/leave-request',
+          direct: 'forward',
+          icon: 'ribbon'
+        },
+        {
+          title: 'Create Leave Request ',
+          url: '/create-leave-request',
           direct: 'forward',
           icon: 'ribbon'
         }]

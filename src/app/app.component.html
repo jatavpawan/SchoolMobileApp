@@ -109,7 +109,14 @@
       </ion-list-header>
 
       <div  *ngFor="let p of appPages;let i=index;">
-      <ion-item  color="primary" (click)="expandMenuItem(i)">
+      <ion-item *ngIf="p.subMenu == undefined" (click)="togglemenu()" [routerLink]="[p.url]" color="primary" (click)="expandMenuItem(i)">
+        <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
+        <ion-label>
+          {{p.title}}<b class="caret" *ngIf="p.subMenu != undefined" [class.arrow-up]="expandMenuItemIndex != i">></b>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="p.subMenu != undefined" color="primary" (click)="expandMenuItem(i)">
         <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
         <ion-label>
           {{p.title}}<b class="caret" *ngIf="p.subMenu != undefined" [class.arrow-up]="expandMenuItemIndex != i">></b>
