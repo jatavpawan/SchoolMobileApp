@@ -24,7 +24,7 @@ export class CreateLeaveRequestComponent implements OnInit {
     private formBuilder:FormBuilder,
     public navCtrl: NavController,
     ) { 
-      debugger;
+      // debugger;
 
      this.requestLeaveForm =  this.formBuilder.group({
       employeeId : [null , Validators.required],
@@ -53,7 +53,7 @@ export class CreateLeaveRequestComponent implements OnInit {
   }
 
   uploadFile(file){
-    debugger;
+    // debugger;
  
     let files = file.files[0] 
     var fileType = files.type;
@@ -79,7 +79,7 @@ export class CreateLeaveRequestComponent implements OnInit {
   }
 
   submitLeaveRequest(){
-    debugger;
+    // debugger;
    
     let data2 =  {
       employee_id: this.requestLeaveForm.get('employeeId').value,
@@ -108,7 +108,7 @@ export class CreateLeaveRequestComponent implements OnInit {
 
     }, 
     error =>{
-      debugger;
+      // debugger;
       alert(error.error.errors.message[0]);
     })
   }
@@ -118,7 +118,7 @@ export class CreateLeaveRequestComponent implements OnInit {
   }
 
   removeUploadedFile(file){
-    debugger;
+    // debugger;
     let id = file.id;
     let data = {
       module_id: "",

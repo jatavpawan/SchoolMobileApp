@@ -62,7 +62,7 @@ export class LeaveRequestComponent implements OnInit {
 
   getLeaveRequestList(filterEmployeeIds, filterLeaveTypeIds){
     this.authService.EmployeeLeaveRequestList(filterEmployeeIds, filterLeaveTypeIds).subscribe(resp=>{
-      debugger;
+      // debugger;
       if(resp.status == "success"){
         this.getResponse = true; 
         let filters: any; 
@@ -89,14 +89,14 @@ export class LeaveRequestComponent implements OnInit {
 
 
   applyEmployeeFilter(event){
-    debugger;
+    // debugger;
     this.getResponse =  false;
     this.filterEmployeeIds = (event.detail.value).toString();
     this.getLeaveRequestList(this.filterEmployeeIds , this.filterLeaveTypeIds);
   }
 
   applyLeaveTypeFilter(event){
-    debugger;
+    // debugger;
     this.getResponse =  false;
     this.filterLeaveTypeIds = (event.detail.value).toString();
     this.getLeaveRequestList(this.filterEmployeeIds , this.filterLeaveTypeIds);
