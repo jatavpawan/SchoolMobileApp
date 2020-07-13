@@ -62,9 +62,6 @@ export class ClassTeacherComponent implements OnInit {
 
         console.log("this.courseGroups", this.courseGroups);
       }
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
   }
 

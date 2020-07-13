@@ -117,9 +117,6 @@ export class LoginPage implements OnInit {
         else {
           this.shareService.openToast("Email and Password not matched", "danger");
         }
-      }, error => {
-        this.shareService.dismiss();
-        this.shareService.openToast(error.error.errors.email_or_username[0], "danger");
       })
     }
   }

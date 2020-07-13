@@ -79,9 +79,6 @@ export class EmployeeCardComponent implements OnInit {
         this.employeeRecords = resp.employees;
         this.last_page = resp.employees.last_page;
       }
-    }, error => {
-      this.sharedservice.dismiss();
-      this.sharedservice.openToast(error.error.errors.message[0], "danger");
     })
   }
 

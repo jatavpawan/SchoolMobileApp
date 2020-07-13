@@ -41,9 +41,6 @@ export class SubjectTeacherComponent implements OnInit {
         console.log("this.batchList", this.batchList);
         this.subjectTeachersByBatchId(this.batchList[0].id)
       }
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     });
   }
 
@@ -53,9 +50,6 @@ export class SubjectTeacherComponent implements OnInit {
       this.shareService.dismiss();
       this.subjectTeacherList = resp;
       this.getResponse = true;
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
   }
 

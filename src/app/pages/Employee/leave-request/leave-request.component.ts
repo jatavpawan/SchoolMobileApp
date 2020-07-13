@@ -66,9 +66,6 @@ export class LeaveRequestComponent implements OnInit {
         });
         this.leaveRequestList = newleaveRequestList;
       }
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     });
   }
 

@@ -93,9 +93,6 @@ export class ProfileComponent implements OnInit {
     this.subscription = this.employeeService.EmployeeDetailByEmployeeId(id).subscribe(resp => {
       this.shareService.dismiss();
       this.employeeDetail = resp;
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
   }
 

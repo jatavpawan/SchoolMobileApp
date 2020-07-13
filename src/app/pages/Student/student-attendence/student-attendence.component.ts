@@ -84,9 +84,6 @@ export class StudentAttendenceComponent implements OnInit {
         });
         this.filterAttendanceMethods = resp.attendance_methods;
       }
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
   }
 
@@ -116,9 +113,6 @@ export class StudentAttendenceComponent implements OnInit {
         this.current_date_attendance = resp.current_date_attendance;
 
       }
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
   }
 
@@ -232,9 +226,6 @@ export class StudentAttendenceComponent implements OnInit {
         this.shareService.openToast(resp.message, "success");
         this.getStudenceAttendance();
       }
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
 
   }

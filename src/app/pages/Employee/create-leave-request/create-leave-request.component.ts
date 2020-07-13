@@ -44,14 +44,10 @@ export class CreateLeaveRequestComponent implements OnInit {
         this.employees = resp.employees;
         this.leave_types = resp.leave_types;
       }
-    }, error => {
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
 
     this.subscription =  this.employeeService.uploadExtension().subscribe(resp => {
       this.uploadExtensions = resp;
-    }, error => {
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
 
   }
@@ -82,9 +78,6 @@ export class CreateLeaveRequestComponent implements OnInit {
         this.uploadedFileList.push(resp.upload);
         this.shareService.openToast(resp.message, "success");
       }
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
 
 
@@ -110,7 +103,6 @@ export class CreateLeaveRequestComponent implements OnInit {
       }
     }, error => {
       this.shareService.dismiss();
-      // this.shareService.openToast(error.error.errors.message[0], "danger");
       this.leaveAllocationError = true;
       this.leaveAllocationErrorMsg = error.error.errors.message[0];
     })
@@ -137,9 +129,6 @@ export class CreateLeaveRequestComponent implements OnInit {
         }
 
       }
-    }, error => {
-      this.shareService.dismiss();
-      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
   }
 

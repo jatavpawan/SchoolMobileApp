@@ -64,9 +64,6 @@ export class StudentCardComponent implements OnInit {
         this.studentRecords = resp.student_records;
         this.last_page = resp.student_records.last_page;
       }
-    }, error => {
-      this.sharedservice.dismiss();
-      this.sharedservice.openToast(error.error.errors.message[0], "danger");
     })
   }
 
