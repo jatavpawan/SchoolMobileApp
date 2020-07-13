@@ -74,11 +74,8 @@
             </p>
           </div>
           <div class="rightdiv">
-            <p Class="label label-Danger">: 0/0 Unallocated</p>
+            <p Class="label label-Danger">0/0 Unallocated</p>
           </div>
-
-
-
           <div class="lftdiv">
             <p>
               Created at
@@ -101,7 +98,8 @@
 
           </div>
           <div class="rightdiv ion-text-wrap">
-            <p>:{{timeTable.description}}</p>
+            <p *ngIf="timeTable.description == null || timeTable.description == '' ">: N/A</p>
+            <p *ngIf="timeTable.description != null && timeTable.description != ''">:{{timeTable.description}}</p>
           </div>
         </ion-label>
 
