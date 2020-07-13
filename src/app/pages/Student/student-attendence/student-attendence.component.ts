@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { FullCalendarOptions, EventObject } from 'ngx-fullcalendar';
 import { ShardServiceService } from 'src/app/services/shard-service.service';
 import { StudentService } from 'src/app/services/studentservice/student.service';
 import { Subscription } from 'rxjs';
@@ -11,8 +10,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./student-attendence.component.scss']
 })
 export class StudentAttendenceComponent implements OnInit {
-  options: FullCalendarOptions;
-  events: EventObject[];
 
   checked: Boolean = true;
 
@@ -68,15 +65,6 @@ export class StudentAttendenceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.options = {
-      defaultDate: '2018-07-26',
-      editable: true,
-    };
-
-    this.events = [
-      { id: 'a', title: 'My Birthday', allDay: true },
-      { id: 'b', title: 'Friends coming round', start: '2018-07-26T18:00:00', end: '2018-07-26T23:00:00' }
-    ]
     this.studentAttendancePreRequisite();
 
   }
