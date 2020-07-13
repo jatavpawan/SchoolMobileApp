@@ -75,7 +75,7 @@
   <ng-container *ngIf="getResponse == false">
     <p class="no-data-found"> Please Apply Filter </p>
   </ng-container>
-  <ng-container *ngIf="getResponse == true">
+  <ng-container *ngIf="getResponse == true && student_data.length != 0">
     <ion-item lines="none">
       <ion-button slot="start" (click)="MarkAllPresent()">Mark All Present</ion-button>
       <ion-button slot="start" (click)="MarkAllAbsent()">Mark All Absent</ion-button>
@@ -120,19 +120,13 @@
         </tr>
       </table>
     </div>
-    <ion-item>
+    <ion-item lines="none">
       <ion-button size="default" slot="end" (click)="saveAttendanceStatusChange()">Save</ion-button>
     </ion-item>
-    <ion-item>
-      <ion-icon class="attendance-mark fas fa-times" color="danger"></ion-icon>
-      Absent
-      <ion-icon class="attendance-mark fas fa-check" color="success"></ion-icon>
-      Present
-      <ion-icon class="attendance-mark fas fa-coffee" color="warning"></ion-icon>
-      Half Day
-      <ion-icon class="attendance-mark fas fa-history" color="secondary"></ion-icon>
-      Late
-    </ion-item>
+    
+  </ng-container>
 
+  <ng-container *ngIf="getResponse == true && student_data.length == 0">
+    <p class="no-data-found"> No Result Found</p>
   </ng-container>
 </ion-content>
