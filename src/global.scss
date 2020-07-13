@@ -105,6 +105,8 @@ ion-item {
     .user-avatar {
       width: 68px;
       height: 68px;
+      padding: 4px;
+      background-color: white;
     }
     .item-inner {
       border-width: 0;
@@ -156,9 +158,11 @@ ion-item {
         width: 60px;
         height: 60px;
         margin: 20px auto 8px;
-        border-radius: 10%;
-        background: url("/assets/img/logo.png") no-repeat;
+        border-radius: 50%;
+        // background: url("/assets/img/logo.png") no-repeat;
         background-size: 100%;
+        background-color: white;
+        padding: 4px;
       }
   
       .list-form {

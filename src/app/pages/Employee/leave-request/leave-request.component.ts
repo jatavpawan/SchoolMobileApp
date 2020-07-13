@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
+import { ShardServiceService } from 'src/app/services/shard-service.service';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { EmployeeService } from 'src/app/services/employeeservice/employee.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,98 +12,106 @@ import * as moment from 'moment';
   styleUrls: ['./leave-request.component.scss']
 })
 export class LeaveRequestComponent implements OnInit {
-
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   checked: Boolean = false;
-  ctrl : any= [
-    {  
-      Subject:'Language (LAN)',
-      CurrentSubjectTeacher :'Umar Goel',
-      SubjectTeacherHistory:[{history:'(1) Umar Goel (SM0114) from 01-07-2019'},
-      {history:'(2) Kabeer Raja (SM0110) from 01-04-2019 '}]
-    },
-    {  
-      Subject:'Environment (ENV)',
-      CurrentSubjectTeacher :'Umar Goel',
-      SubjectTeacherHistory:[{history:'(1) Umar Goel (SM0114) from 01-07-2019'},
-      {history:'(2) Kabeer Raja (SM0110) from 01-04-2019 '}]
-    },
-    {  
-      Subject:'Rhymes (RHY)',
-      CurrentSubjectTeacher :'Umar Goel',
-      SubjectTeacherHistory:[{history:'(1) Umar Goel (SM0114) from 01-07-2019'},
-      {history:'(2) Kabeer Raja (SM0110) from 01-04-2019 '}]
-    },
-    {  
-      Subject:'Numbers (NUM)',
-      CurrentSubjectTeacher :'Umar Goel',
-      SubjectTeacherHistory:[{history:'(1) Umar Goel (SM0114) from 01-07-2019'},
-      {history:'(2) Kabeer Raja (SM0110) from 01-04-2019 '}]
-    },
 
- ]   
-
- 
- customPopoverOptions: any = {  
-  //header: 'Flower Name',  
-  //subHeader: 'Select number of persons',  
-  class:"popover-contentss"
- // message: 'Only select your favorite flower'  
-};
-  leaveRequestList: Array<any>= [];
-  employeeFilter: Array<any>= [];
-  leaveTypesFilter: Array<any>= [];
-  getResponse: boolean =  false;
+  customPopoverOptions: any = {
+    class: "popover-contentss"
+  };
+  leaveRequestList: Array<any> = [];
+  employeeFilter: Array<any> = [];
+  leaveTypesFilter: Array<any> = [];
+  getResponse: boolean = false;
   filterEmployeeIds: string = '';
   filterLeaveTypeIds: string = '';
+  last_page: number = 1;
+  currentPageno: number = 1;
+  subscription: Subscription;
 
-  constructor(private authService:AuthenticationService) { }
+  constructor(
+    private shareService: ShardServiceService,
+    private employeeService: EmployeeService,
+
+  ) { }
 
   ngOnInit() {
-    this.getLeaveRequestList('', '')
-    
+    this.getLeaveRequestList('', '', 1)
+
   }
 
-  getLeaveRequestList(filterEmployeeIds, filterLeaveTypeIds){
-    this.authService.EmployeeLeaveRequestList(filterEmployeeIds, filterLeaveTypeIds).subscribe(resp=>{
-      // debugger;
-      if(resp.status == "success"){
-        this.getResponse = true; 
-        let filters: any; 
+  getLeaveRequestList(filterEmployeeIds, filterLeaveTypeIds, pageNo = 1) {
+    this.getResponse = false;
+    this.shareService.present();
+    this.subscription = this.employeeService.EmployeeLeaveRequestList(filterEmployeeIds, filterLeaveTypeIds, pageNo).subscribe(resp => {
+      this.shareService.dismiss();
+      if (resp.status == "success") {
+        this.getResponse = true;
+        let filters: any;
         filters = resp.filters;
-        this.employeeFilter = filters.employees; 
-        this.leaveTypesFilter = filters.leave_types; 
+        this.employeeFilter = filters.employees;
+        this.leaveTypesFilter = filters.leave_types;
 
-        this.leaveRequestList =  resp.leave_requests.data;
+        this.leaveRequestList = [...this.leaveRequestList, ...resp.leave_requests.data];
+        this.last_page = resp.leave_requests.last_page;
 
-        let newleaveRequestList =  resp.leave_requests.data.map ( leave =>{
-          // let date3 = moment(leave.start_date).format('YYYY MM DD');
+
+        let newleaveRequestList = this.leaveRequestList.map(leave => {
           let date1 = moment(leave.start_date);
           let date2 = moment(leave.end_date);
-          let diff = date2.diff(date1, 'days');    
-          
-          leave.leaveCount = diff+1;
+          let diff = date2.diff(date1, 'days');
+
+          leave.leaveCount = diff + 1;
           return leave;
-             
+
         });
-        this.leaveRequestList =  newleaveRequestList;
+        this.leaveRequestList = newleaveRequestList;
       }
+    }, error => {
+      this.shareService.dismiss();
+      this.shareService.openToast(error.error.errors.message[0], "danger");
     });
   }
 
 
-  applyEmployeeFilter(event){
-    // debugger;
-    this.getResponse =  false;
+  applyEmployeeFilter(event) {
+    this.getResponse = false;
     this.filterEmployeeIds = (event.detail.value).toString();
-    this.getLeaveRequestList(this.filterEmployeeIds , this.filterLeaveTypeIds);
   }
 
-  applyLeaveTypeFilter(event){
-    // debugger;
-    this.getResponse =  false;
+  applyLeaveTypeFilter(event) {
+    this.getResponse = false;
     this.filterLeaveTypeIds = (event.detail.value).toString();
-    this.getLeaveRequestList(this.filterEmployeeIds , this.filterLeaveTypeIds);
+  }
 
+
+  applyFilter() {
+    this.checked = false;
+    if (this.infiniteScroll.disabled) {
+      this.infiniteScroll.disabled = false;
+
+    }
+    this.currentPageno = 1;
+    this.leaveRequestList = [];
+    this.getLeaveRequestList(this.filterEmployeeIds, this.filterLeaveTypeIds, 1);
+
+  }
+
+  loadData(event) {
+    setTimeout(() => {
+      event.target.complete();
+      ++this.currentPageno;
+
+      if (this.last_page >= this.currentPageno) {
+        this.getLeaveRequestList(this.filterEmployeeIds, this.filterLeaveTypeIds, this.currentPageno);
+      }
+      else {
+        event.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

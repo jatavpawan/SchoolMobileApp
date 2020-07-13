@@ -3,6 +3,8 @@ import { ShardServiceService } from 'src/app/services/shard-service.service';
 import { NavController } from '@ionic/angular';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
+import { EmployeeService } from 'src/app/services/employeeservice/employee.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-employee-card',
@@ -14,7 +16,7 @@ export class EmployeeCardComponent implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   checked: Boolean = false;
-  
+
   employees: Array<any> = [];
   employeeRecords: Array<any> = [];
   filters: any;
@@ -30,6 +32,8 @@ export class EmployeeCardComponent implements OnInit {
   middle_name: string = '';
   last_name: string = '';
   getResponse: boolean = false;
+  subscription: Subscription;
+
 
 
 
@@ -37,6 +41,7 @@ export class EmployeeCardComponent implements OnInit {
     private sharedservice: ShardServiceService,
     public navCtrl: NavController,
     private authService: AuthenticationService,
+    private employeeService: EmployeeService,
   ) { }
 
   ngOnInit() {
@@ -55,7 +60,9 @@ export class EmployeeCardComponent implements OnInit {
   loadEmployeeList(first_name = '', middle_name = '', last_name = '', departmentIds = '', designationIds = '', employeeGroupIds = '', status = 'active', pageNo = 1) {
 
     this.getResponse = false;
-    this.authService.EmployeeList(first_name, middle_name, last_name, departmentIds, designationIds, employeeGroupIds, status, pageNo).subscribe(resp => {
+    this.sharedservice.present();
+    this.subscription = this.employeeService.EmployeeList(first_name, middle_name, last_name, departmentIds, designationIds, employeeGroupIds, status, pageNo).subscribe(resp => {
+      this.sharedservice.dismiss();
       if (resp.status == "success") {
         this.getResponse = true;
 
@@ -72,6 +79,9 @@ export class EmployeeCardComponent implements OnInit {
         this.employeeRecords = resp.employees;
         this.last_page = resp.employees.last_page;
       }
+    }, error => {
+      this.sharedservice.dismiss();
+      this.sharedservice.openToast(error.error.errors.message[0], "danger");
     })
   }
 
@@ -92,7 +102,6 @@ export class EmployeeCardComponent implements OnInit {
 
   loadData(event) {
     setTimeout(() => {
-      console.log('Done');
       event.target.complete();
       ++this.currentPageno;
 
@@ -109,11 +118,10 @@ export class EmployeeCardComponent implements OnInit {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
-  applyFilter(){
+  applyFilter() {
     this.checked = false;
-    if(this.infiniteScroll.disabled)
-    {
-    this.infiniteScroll.disabled = false;
+    if (this.infiniteScroll.disabled) {
+      this.infiniteScroll.disabled = false;
 
     }
     this.currentPageno = 1;
@@ -121,5 +129,10 @@ export class EmployeeCardComponent implements OnInit {
     this.loadEmployeeList(this.first_name, this.middle_name, this.last_name, this.departmentIds, this.designationIds, this.employeeGroupIds, this.status, this.currentPageno);
 
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
 }

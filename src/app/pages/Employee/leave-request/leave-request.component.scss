@@ -2,7 +2,17 @@ ion-card-title {
     font-size: 14px;
     font-weight: 600;
 }
-
+.collapsmap {
+    display: none;
+          transition: display 1s;
+        transition-timing-function: linear;
+     }
+     .expanmap{
+       display: block;
+        transition: display 1s;
+        transition-timing-function: linear;
+     }
+   
 
 .no-data-found{
 

@@ -72,7 +72,8 @@
 
       <ion-item margin-bottom>
         <ion-avatar slot="start" class="user-avatar">
-          <img src="assets/img/logo.png">
+          <!-- <img src="assets/img/logo.png"> -->
+          <img src="assets/icon/favicon2.png">
         </ion-avatar>
         <ion-label>
           <ion-text color="medium">
@@ -117,7 +118,8 @@
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-label>
       </ion-item>
-      <ion-item [routerLink]="[s.url]" (click)="togglemenu()"  [class.hidden-item]="expandMenuItemIndex != i"  *ngFor="let s of p.subMenu" color="secondary">
+      <!-- [@openClose]="expandMenuItemIndex != i ? 'open' : 'closed'" -->
+      <ion-item  [routerLink]="[s.url]" (click)="togglemenu()"  [class.hidden-item]="expandMenuItemIndex != i"  *ngFor="let s of p.subMenu" color="secondary">
         <ion-icon slot="start" [name]="s.icon" color="light"></ion-icon>
         <ion-label>
           {{s.title}}

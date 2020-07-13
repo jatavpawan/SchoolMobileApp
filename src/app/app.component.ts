@@ -6,11 +6,32 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Pages } from './interfaces/pages';
 import { AuthenticationService } from './services/authservice/authentication.service';
+import { trigger, state,style,animate,transition } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  // animations: [
+  //   trigger('openClose', [
+  //     state('open', style({
+  //       height: '200px',
+  //       opacity: 1,
+  //       backgroundColor: 'yellow'
+  //     })),
+  //     state('closed', style({
+  //       height: '100px',
+  //       opacity: 0.5,
+  //       backgroundColor: 'green'
+  //     })),
+  //     transition('open => closed', [
+  //       animate('5s')
+  //     ]),
+  //     transition('closed => open', [
+  //       animate('5s')
+  //     ]),
+  //   ]),
+  // ]
 })
 export class AppComponent {
 

@@ -1,67 +1,97 @@
-
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button color="secondary"></ion-menu-button>
     </ion-buttons>
     <ion-title>
-        <ion-text color="light">
-          <ion-text color="light" class="fw700">Leave Request</ion-text>
-        </ion-text>
+      <ion-text color="light">
+        <ion-text color="light" class="fw700">Leave Request</ion-text>
+      </ion-text>
     </ion-title>
   </ion-toolbar>
-   
+
 </ion-header>
 
 <ion-content>
   <ion-card no-margin class="no-radius">
-   
-     
+    <ion-item lines="none" color="medium">
+      <ion-label>
+        <h2 no-margin color="primary" class="fw500 no-margin">
+        </h2>
+      </ion-label>
+      <ion-button fill="outline" size="small" color="primary" *ngIf="checked == true" (click)="applyFilter()">
+        Apply Filter
+      </ion-button>
+      <ion-button fill="outline" size="small" color="primary" (click)="checked = !checked;">
+        Filter
+        <ion-icon src="../../../assets/img/funnel-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-item>
+
     <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
-    <ion-item color="medium">  
-      <ion-label class="input-info-label">Employee</ion-label>  
-      <ion-select [interfaceOptions]="customPopoverOptions" multiple="true" interface="popover" placeholder="Select One" (ionChange)="applyEmployeeFilter($event)">  
-          <ion-select-option  [value]=employee?.id *ngFor="let employee of employeeFilter">{{employee?.name}}</ion-select-option>  
-      </ion-select>  
-    </ion-item> 
-    <ion-item color="medium">  
-      <ion-label class="input-info-label">Leave Type</ion-label>  
-      <ion-select [interfaceOptions]="customPopoverOptions" multiple="true" interface="popover" placeholder="Select One" (ionChange)="applyLeaveTypeFilter($event)">  
-          <ion-select-option  [value]=leaveType?.id *ngFor="let leaveType of leaveTypesFilter">{{leaveType?.name}}</ion-select-option>  
-      </ion-select>  
-    </ion-item> 
-   
-  </div>
+      <ion-item color="medium">
+        <ion-label class="input-info-label">Employee</ion-label>
+        <ion-select [interfaceOptions]="customPopoverOptions" multiple="true" interface="popover"
+          placeholder="Select One" (ionChange)="applyEmployeeFilter($event)">
+          <ion-select-option [value]=employee?.id *ngFor="let employee of employeeFilter">{{employee?.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item color="medium">
+        <ion-label class="input-info-label">Leave Type</ion-label>
+        <ion-select [interfaceOptions]="customPopoverOptions" multiple="true" interface="popover"
+          placeholder="Select One" (ionChange)="applyLeaveTypeFilter($event)">
+          <ion-select-option [value]=leaveType?.id *ngFor="let leaveType of leaveTypesFilter">{{leaveType?.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </div>
   </ion-card>
-<ng-container *ngIf="leaveRequestList.length != 0">
-  <ion-card *ngFor="let leaveRequest of leaveRequestList">
-    <ion-card-header >
-      <ion-card-title>Name</ion-card-title>
-      <ion-card-subtitle>{{leaveRequest?.employee?.name}} ({{leaveRequest?.employee?.employee_code}})</ion-card-subtitle>
-      <ion-card-title>Designation</ion-card-title>
-      <ion-card-subtitle *ngIf="leaveRequest?.employee?.employee_designations.length !=0 ">{{leaveRequest.employee.employee_designations[0]?.designation?.name}} ({{leaveRequest.employee.employee_designations[0].designation.employee_category.name}})</ion-card-subtitle>
-      <ion-card-title>Leave Type</ion-card-title>
-      <ion-card-subtitle >{{leaveRequest?.leave_type?.name}}</ion-card-subtitle>
-      <ion-card-title>Period</ion-card-title>
-      <ion-card-subtitle >{{leaveRequest?.start_date|date : 'dd-MM-yyyy'}} to {{leaveRequest?.end_date|date : 'dd-MM-yyyy'}}</ion-card-subtitle>
-      <ion-card-title>Count</ion-card-title>
-      <ion-card-subtitle >{{leaveRequest?.leaveCount}}</ion-card-subtitle>
-      <ion-card-title>Status</ion-card-title>
-      <ion-card-subtitle  class="status status-success " *ngIf="leaveRequest?.status == 'approved' ">{{leaveRequest?.status}}</ion-card-subtitle>
-      <ion-card-subtitle  class="status status-primary " *ngIf="leaveRequest?.status == 'pending' ">{{leaveRequest?.status}}</ion-card-subtitle>
-      <ion-card-subtitle  class="status status-warning " *ngIf="leaveRequest?.status == 'cancelled' ">{{leaveRequest?.status}}</ion-card-subtitle>
-      <ion-card-subtitle  class="status status-Danger " *ngIf="leaveRequest?.status == 'rejected' ">{{leaveRequest?.status}}</ion-card-subtitle>
-      <ion-card-title>	Requested by</ion-card-title>
-      <ion-card-subtitle >{{leaveRequest?.requester_user.employee.name}}  ({{leaveRequest?.requester_user.employee.employee_code}})</ion-card-subtitle>
-        
-    </ion-card-header>
-  </ion-card>
-</ng-container>
+  <ng-container *ngIf="leaveRequestList.length != 0">
+    <ion-card *ngFor="let leaveRequest of leaveRequestList">
+      <ion-card-header>
+        <ion-card-title>Name</ion-card-title>
+        <ion-card-subtitle>{{leaveRequest?.employee?.name}} ({{leaveRequest?.employee?.employee_code}})
+        </ion-card-subtitle>
+        <ion-card-title>Designation</ion-card-title>
+        <ion-card-subtitle *ngIf="leaveRequest?.employee?.employee_designations.length !=0 ">
+          {{leaveRequest.employee.employee_designations[0]?.designation?.name}}
+          ({{leaveRequest.employee.employee_designations[0].designation.employee_category.name}})</ion-card-subtitle>
+        <ion-card-title>Leave Type</ion-card-title>
+        <ion-card-subtitle>{{leaveRequest?.leave_type?.name}}</ion-card-subtitle>
+        <ion-card-title>Period</ion-card-title>
+        <ion-card-subtitle>{{leaveRequest?.start_date|date : 'dd-MM-yyyy'}} to
+          {{leaveRequest?.end_date|date : 'dd-MM-yyyy'}}</ion-card-subtitle>
+        <ion-card-title>Count</ion-card-title>
+        <ion-card-subtitle>{{leaveRequest?.leaveCount}}</ion-card-subtitle>
+        <ion-card-title>Status</ion-card-title>
+        <ion-card-subtitle class="status status-success " *ngIf="leaveRequest?.status == 'approved' ">
+          {{leaveRequest?.status}}</ion-card-subtitle>
+        <ion-card-subtitle class="status status-primary " *ngIf="leaveRequest?.status == 'pending' ">
+          {{leaveRequest?.status}}</ion-card-subtitle>
+        <ion-card-subtitle class="status status-warning " *ngIf="leaveRequest?.status == 'cancelled' ">
+          {{leaveRequest?.status}}</ion-card-subtitle>
+        <ion-card-subtitle class="status status-Danger " *ngIf="leaveRequest?.status == 'rejected' ">
+          {{leaveRequest?.status}}</ion-card-subtitle>
+        <ion-card-title> Requested by</ion-card-title>
+        <ion-card-subtitle>{{leaveRequest?.requester_user.employee.name}}
+          ({{leaveRequest?.requester_user.employee.employee_code}})</ion-card-subtitle>
 
-<ng-container *ngIf="leaveRequestList.length == 0 && getResponse == true">
-  <p class="no-data-found"> No Result Found</p>
-</ng-container>
+      </ion-card-header>
+    </ion-card>
+  </ng-container>
+
+  <ng-container *ngIf="leaveRequestList.length == 0 && getResponse == true">
+    <p class="no-data-found"> No Result Found</p>
+  </ng-container>
 
 
-  
+  <ng-container *ngIf="leaveRequestList.length != 0 && getResponse == true">
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container>
+
 </ion-content>

@@ -20,6 +20,9 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { DataService } from './services/dataservice/data.service';
 import { AuthenticationService } from './services/authservice/authentication.service';
 import { AuthInterceptor } from './security/auth.interceptor';
+import { AcademicService } from './services/academicservice/academic.service';
+import { EmployeeService } from './services/employeeservice/employee.service';
+import { StudentService } from './services/studentservice/student.service';
 
 
 
@@ -39,6 +42,9 @@ import { AuthInterceptor } from './security/auth.interceptor';
   providers: [
     DataService,
     AuthenticationService,
+    AcademicService,
+    EmployeeService,
+    StudentService,
     StatusBar,
     SplashScreen,CallNumber,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -1,52 +1,59 @@
-
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button color="secondary"></ion-menu-button>
     </ion-buttons>
     <ion-title>
-        <ion-text color="light">
-          <ion-text color="light" class="fw700">Subject Teacher </ion-text>
-        </ion-text>
+      <ion-text color="light">
+        <ion-text color="light" class="fw700">Subject Teacher </ion-text>
+      </ion-text>
     </ion-title>
   </ion-toolbar>
-   
+
 </ion-header>
 
 <ion-content>
   <ion-card no-margin class="no-radius">
-   
-     
+
+
     <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
-    <ion-item color="medium">  
-      <ion-label class="input-info-label">Select Batch</ion-label>  
-      <ion-select [interfaceOptions]="customPopoverOptions"  interface="popover" placeholder="Select One" (ionChange)="changeBatch($event)">  
-          <ion-select-option  [value]=batch?.id *ngFor="let batch of batchList">{{batch?.name}}</ion-select-option>  
-      </ion-select>  
-    </ion-item> 
-   
-  </div>
+      <ion-item color="medium">
+        <ion-label class="input-info-label">Select Batch</ion-label>
+        <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One"
+          (ionChange)="changeBatch($event)">
+          <ion-select-option [value]=batch?.id *ngFor="let batch of batchList">{{batch?.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </div>
   </ion-card>
-<ng-container *ngIf="subjectTeacherList.length != 0">
-  <ion-card *ngFor="let subjectTeacher of subjectTeacherList">
-    <ion-card-header >
-      <ion-card-title>Subject</ion-card-title>
-      <ion-card-subtitle>{{subjectTeacher?.name}} ({{subjectTeacher?.code}})</ion-card-subtitle>
-      <ion-card-title> Current Subject Teacher</ion-card-title>
-      <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length !=0 ">{{subjectTeacher?.subject_teachers[0].employee.name}} ({{subjectTeacher?.subject_teachers[0].employee.employee_code}})</ion-card-subtitle>
-      <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length ==0 ">N/A</ion-card-subtitle>
-      <ion-card-title> Subject Teacher History</ion-card-title>
-      <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length !=0 "><p  *ngFor="let teacher of subjectTeacher?.subject_teachers">{{teacher?.employee.name}} ({{teacher?.employee.employee_code }}) from {{teacher?.date_effective|date:'dd-MM-yyyy' }}</p></ion-card-subtitle>
-      <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length ==0 "><p >N/A</p></ion-card-subtitle>
-        
-    </ion-card-header>
-  </ion-card>
-</ng-container>
+  <ng-container *ngIf="subjectTeacherList.length != 0">
+    <ion-card *ngFor="let subjectTeacher of subjectTeacherList">
+      <ion-card-header>
+        <ion-card-title>Subject</ion-card-title>
+        <ion-card-subtitle>{{subjectTeacher?.name}} ({{subjectTeacher?.code}})</ion-card-subtitle>
+        <ion-card-title> Current Subject Teacher</ion-card-title>
+        <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length !=0 ">
+          {{subjectTeacher?.subject_teachers[0].employee.name}}
+          ({{subjectTeacher?.subject_teachers[0].employee.employee_code}})</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length ==0 ">N/A</ion-card-subtitle>
+        <ion-card-title> Subject Teacher History</ion-card-title>
+        <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length !=0 ">
+          <p *ngFor="let teacher of subjectTeacher?.subject_teachers">{{teacher?.employee.name}}
+            ({{teacher?.employee.employee_code }}) from {{teacher?.date_effective|date:'dd-MM-yyyy' }}</p>
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="subjectTeacher?.subject_teachers.length ==0 ">
+          <p>N/A</p>
+        </ion-card-subtitle>
 
-<ng-container *ngIf="subjectTeacherList.length == 0 && getResponse == true">
-  <p class="no-data-found"> No Result Found</p>
-</ng-container>
+      </ion-card-header>
+    </ion-card>
+  </ng-container>
+
+  <ng-container *ngIf="subjectTeacherList.length == 0 && getResponse == true">
+    <p class="no-data-found"> No Result Found</p>
+  </ng-container>
 
 
-  
+
 </ion-content>

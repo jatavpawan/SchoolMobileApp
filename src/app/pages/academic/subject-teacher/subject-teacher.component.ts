@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
+import { ShardServiceService } from 'src/app/services/shard-service.service';
+import { AcademicService } from 'src/app/services/academicservice/academic.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-subject-teacher',
@@ -8,75 +10,64 @@ import { AuthenticationService } from 'src/app/services/authservice/authenticati
 })
 export class SubjectTeacherComponent implements OnInit {
   checked: Boolean = false;
-  ctrl : any= [
-    {  
-      Subject:'Language (LAN)',
-      CurrentSubjectTeacher :'Umar Goel',
-      SubjectTeacherHistory:[{history:'(1) Umar Goel (SM0114) from 01-07-2019'},
-      {history:'(2) Kabeer Raja (SM0110) from 01-04-2019 '}]
-    },
-    {  
-      Subject:'Environment (ENV)',
-      CurrentSubjectTeacher :'Umar Goel',
-      SubjectTeacherHistory:[{history:'(1) Umar Goel (SM0114) from 01-07-2019'},
-      {history:'(2) Kabeer Raja (SM0110) from 01-04-2019 '}]
-    },
-    {  
-      Subject:'Rhymes (RHY)',
-      CurrentSubjectTeacher :'Umar Goel',
-      SubjectTeacherHistory:[{history:'(1) Umar Goel (SM0114) from 01-07-2019'},
-      {history:'(2) Kabeer Raja (SM0110) from 01-04-2019 '}]
-    },
-    {  
-      Subject:'Numbers (NUM)',
-      CurrentSubjectTeacher :'Umar Goel',
-      SubjectTeacherHistory:[{history:'(1) Umar Goel (SM0114) from 01-07-2019'},
-      {history:'(2) Kabeer Raja (SM0110) from 01-04-2019 '}]
-    },
 
- ]   
+  customPopoverOptions: any = {
+    class: "popover-contentss"
+  };
+  batchList: Array<any> = [];
+  subjectTeacherList: Array<any> = [];
+  getResponse: boolean = false;
 
- 
- customPopoverOptions: any = {  
-  //header: 'Flower Name',  
-  //subHeader: 'Select number of persons',  
-  class:"popover-contentss"
- // message: 'Only select your favorite flower'  
-};
-  batchList: Array<any>= [];
-  subjectTeacherList: Array<any>= [];
-  getResponse: boolean =  false;
+  subscription: Subscription;
 
-  constructor(private authService:AuthenticationService) { }
+
+
+  constructor(
+    private shareService: ShardServiceService,
+    private academicService: AcademicService,
+
+  ) { }
 
   ngOnInit() {
-    // // debugger;
-    this.authService.courseBatchList().subscribe(resp=>{
-      if(resp.status == "success"){
-        let batches: Array<any>; 
+    this.shareService.present();
+    this.subscription = this.academicService.courseBatchList().subscribe(resp => {
+      this.shareService.dismiss();
+      if (resp.status == "success") {
+        let batches: Array<any>;
         batches = resp.batches;
-        batches.forEach(batch =>{
-          this.batchList = [...this.batchList , ...batch.batches];
+        batches.forEach(batch => {
+          this.batchList = [...this.batchList, ...batch.batches];
         })
         console.log("this.batchList", this.batchList);
         this.subjectTeachersByBatchId(this.batchList[0].id)
       }
+    }, error => {
+      this.shareService.dismiss();
+      this.shareService.openToast(error.error.errors.message[0], "danger");
     });
   }
 
-  subjectTeachersByBatchId(batchId){
-    // // debugger;
-    this.authService.subjectTeachersByBatchId(batchId).subscribe(resp =>{
-        this.subjectTeacherList =  resp;
-        this.getResponse = true; 
+  subjectTeachersByBatchId(batchId) {
+    this.shareService.present();
+    this.subscription = this.academicService.subjectTeachersByBatchId(batchId).subscribe(resp => {
+      this.shareService.dismiss();
+      this.subjectTeacherList = resp;
+      this.getResponse = true;
+    }, error => {
+      this.shareService.dismiss();
+      this.shareService.openToast(error.error.errors.message[0], "danger");
     })
   }
 
-  changeBatch(event){
-    // // debugger;
-    this.getResponse =  false;
-   let batchId = event.detail.value;
-   this.subjectTeachersByBatchId(batchId);
+  changeBatch(event) {
+    this.getResponse = false;
+    let batchId = event.detail.value;
+    this.subjectTeachersByBatchId(batchId);
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
 }

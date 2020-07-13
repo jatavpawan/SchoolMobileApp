@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ShardServiceService } from 'src/app/services/shard-service.service';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { AcademicService } from 'src/app/services/academicservice/academic.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-time-table',
@@ -7,137 +10,94 @@ import { AuthenticationService } from 'src/app/services/authservice/authenticati
   styleUrls: ['./time-table.component.scss']
 })
 export class TimeTableComponent implements OnInit {
-   checked: Boolean = false;
-   ctrl : any= [
-      {
-         
-         Batch:'Nursery Section A',
-         DateEffective :'01-10-2019',
-         Status:'30/18 Partially Allocated',
-         Description :'N/A',
-         StatusColor:'label label-warning'
-       }, {
-         
-         Batch:'Nursery Section A',
-         DateEffective :'01-10-2019',
-         Status:'0/0 Unallocated',
-         Description :'N/A',
-         StatusColor:'label label-Danger'
-       }, {
-         
-        Batch:'Nursery Section A',
-        DateEffective :'01-10-2019',
-        Status:'30/30 Allocated',
-        Description :'N/A',
-        StatusColor:'label label-success'
-      }, {
-         
-        Batch:'Nursery Section A',
-        DateEffective :'01-10-2019',
-        Status:'0/0 Unallocated',
-        Description :'N/A',
-         StatusColor:'label label-Danger'
-      }, {
-         
-        Batch:'Nursery Section A',
-        DateEffective :'01-10-2019',
-        Status:'0/0 Unallocated',
-        Description :'N/A',
-         StatusColor:'label label-Danger'
-      }, {
-         
-        Batch:'Nursery Section A',
-        DateEffective :'01-10-2019',
-        Status:'0/0 Unallocated',
-        Description :'N/A',
-         StatusColor:'label label-Danger'
-      }, {
-         
-        Batch:'Nursery Section A',
-        DateEffective :'01-10-2019',
-        Status:'0/0 Unallocated',
-        Description :'N/A',
-         StatusColor:'label label-Danger'
-      }, {
-         
-        Batch:'Nursery Section A',
-        DateEffective :'01-10-2019',
-        Status:'30/18 Partially Allocated',
-        Description :'N/A',
-         StatusColor:'label label-Danger'
-      }, {
-         
-        Batch:'Nursery Section A',
-        DateEffective :'01-10-2019',
-        Status:'30/18 Partially Allocated',
-        Description :'N/A',
-         StatusColor:'label label-Danger'
-      }, {
-         
-        Batch:'Nursery Section A',
-        DateEffective :'01-10-2019',
-        Status:'30/18 Partially Allocated',
-        Description :'N/A',
-         StatusColor:'label label-Danger'
-      },
-      
-   ]
-  
-  customPopoverOptions: any = {  
-   //header: 'Flower Name',  
-   //subHeader: 'Select number of persons',  
-   class:"popover-contentss"
-  // message: 'Only select your favorite flower'  
- };  
-  timeTableList: any= [];
-  filter: any[] =[];
-  getResponse: boolean =  false;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+
+  checked: Boolean = false;
+  customPopoverOptions: any = {
+    class: "popover-contentss"
+  };
+  timeTableList: any = [];
+  filter: any[] = [];
+  getResponse: boolean = false;
   batchIds: string = '';
   effectiveDate: string = '';
+  last_page: number = 1;
+  currentPageno: number = 1;
+  subscription: Subscription;
+
 
   constructor(
-    private authService: AuthenticationService
+    private shareService: ShardServiceService,
+    private academicService: AcademicService,
   ) { }
 
   ngOnInit() {
-    this.loadTimeTableList(this.batchIds, this.effectiveDate);
+    this.loadTimeTableList(this.batchIds, this.effectiveDate, 1);
   }
 
-  loadTimeTableList(batchIds, dateEffective){ 
-    // debugger;
-     this.authService.getTimeTableList(batchIds, dateEffective).subscribe(resp =>{
-       if(resp.status == "success"){
+  loadTimeTableList(batchIds, dateEffective, pageNo = 1) {
+    this.getResponse = false;
+    // this.shareService.present();
+    this.shareService.present();
+
+    this.subscription = this.academicService.getTimeTableList(batchIds, dateEffective, pageNo).subscribe(resp => {
+      // this.shareService.dismiss();
+      this.shareService.dismiss();
+
+      if (resp.status == "success") {
         this.getResponse = true;
-        this.timeTableList = resp.timetables.data;
+
+        this.timeTableList = [...this.timeTableList, ...resp.timetables.data];
+        this.last_page = resp.timetables.last_page;
         let batches: any[] = resp.filters.batches;
 
-        batches.forEach( item =>{
-            this.filter = [...this.filter, ...item.batches];
+        batches.forEach(item => {
+          this.filter = [...this.filter, ...item.batches];
         })
 
-       }
-     })
+      }
+    }, error => {
+      this.shareService.dismiss();
+      this.shareService.openToast(error.error.errors.message[0], "danger");
+    })
   }
 
-  
-  changeBatch(event){
-    // debugger;
-    // this.batchIds = '';
-    this.filter=[];
-    this.getResponse =  false;
+
+  changeBatch(event) {
+    this.filter = [];
+    this.getResponse = false;
     this.batchIds = (event.detail.value).toString();
-   this.loadTimeTableList(this.batchIds, this.effectiveDate);
+    this.loadTimeTableList(this.batchIds, this.effectiveDate, 1);
   }
 
-  changeDateEffective(event){
-     // debugger;
-    this.filter=[];
-
-    // this.effectiveDate = '';
-    this.getResponse =  false;
+  changeDateEffective(event) {
+    this.filter = [];
+    this.infiniteScroll.disabled = false;
+    this.currentPageno = 1;
+    this.timeTableList = [];
+    this.getResponse = false;
     this.effectiveDate = (event.detail.value).toString();
-    this.loadTimeTableList(this.batchIds, this.effectiveDate);
+    this.loadTimeTableList(this.batchIds, this.effectiveDate, 1);
 
   }
+
+  loadData(event) {
+    console.log('Done');
+    event.target.complete();
+    ++this.currentPageno;
+
+    if (this.last_page >= this.currentPageno) {
+      this.loadTimeTableList(this.batchIds, this.effectiveDate, this.currentPageno)
+    }
+    else {
+      event.target.disabled = true;
+    }
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
 }

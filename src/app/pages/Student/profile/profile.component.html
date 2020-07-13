@@ -15,7 +15,6 @@
 
 <ion-content>
   <ion-card (click)="expandItem(0)" >
-  <!-- <ion-card data-toggle="collapse" data-target="#demo"> -->
     <ion-card-header>
       <ion-card-title>
         <div class="lft">
@@ -24,7 +23,6 @@
     </ion-card-header>
 
     <ion-card-content>
-    <!-- <ion-card-content id="demo" class="collapse"> -->
       <app-expandable expandHeight="auto" [expanded]="items[0].expanded">
         <br/>
         <ion-label>
@@ -313,11 +311,7 @@
 
     <ion-card-content>
       <app-expandable expandHeight="auto" [expanded]="items[6].expanded">
-        <!-- <ion-label>
-          <h2></h2> 
-          </ion-label> -->
          <p>No Result Found</p>
-         
       </app-expandable>
     </ion-card-content>
   </ion-card>

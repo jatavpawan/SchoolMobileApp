@@ -1,14 +1,156 @@
-
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button color="secondary"></ion-menu-button>
     </ion-buttons>
     <ion-title>
-        <ion-text color="light">
-          <ion-text color="light" class="fw700">Student Attendence </ion-text>
-        </ion-text>
+      <ion-text color="light">
+        <ion-text color="light" class="fw700">Student Attendence </ion-text>
+      </ion-text>
     </ion-title>
   </ion-toolbar>
-   
+
 </ion-header>
+
+<ion-content>
+  <ion-card no-margin class="no-radius">
+    <ion-item lines="none" color="medium">
+      <ion-label>
+        <h2 no-margin color="primary" class="fw500 no-margin">
+
+        </h2>
+
+
+      </ion-label>
+      <ion-button fill="outline" size="small" color="primary" *ngIf="checked == true" (click)="applyFilter()">
+        Apply Filter
+      </ion-button>
+      <ion-button fill="outline" size="small" color="primary" (click)="checked = !checked;">
+        Filter
+        <ion-icon src="../../../assets/img/funnel-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+
+    <div [ngClass]="{'expanmap': checked==true,'collapsmap': checked==false}">
+      <ion-item color="medium">
+        <ion-label class="input-info-label">Batch</ion-label>
+        <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One"
+          (ionChange)="changeInBatch($event)">
+          <ion-select-option [value]=batch?.id *ngFor="let batch of filterBatchList">{{batch?.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item color="medium">
+        <ion-label class="input-info-label">Attendance Method</ion-label>
+        <ion-select [(ngModel)]="attendanceMethod" [interfaceOptions]="customPopoverOptions" interface="popover"
+          placeholder="Select One" (ionChange)="changeInAttendanceMethod($event)">
+          <ion-select-option [value]=attendanceMethod?.value *ngFor="let attendanceMethod of filterAttendanceMethods">
+            {{attendanceMethod?.text}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item color="medium" *ngIf="filterAttendanceMethod == 'subject_wise' ">
+        <ion-label class="input-info-label">Subject</ion-label>
+        <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One"
+          (ionChange)="changeInSubject($event)">
+          <ion-select-option [value]=subject?.id *ngFor="let subject of subjectsInBatch">{{subject?.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item color="medium" *ngIf="filterAttendanceMethod == 'more_than_once' ">
+        <ion-label class="input-info-label">Attendance Session</ion-label>
+        <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One"
+          (ionChange)="changeInAttendanceSession($event)">
+          <ion-select-option [value]=item?.value *ngFor="let item of attendance_method_more_than_once_types">
+            {{item?.text}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item color="medium" *ngIf="filterAttendanceMethod != '' ">
+        <ion-label class="input-info-label">Date of Attendance</ion-label>
+        <ion-datetime [(ngModel)]="DateofAttendance" displayFormat="DDDD, MMM DD YYYY"
+          (ionChange)="changeInDateOfAttendance($event)"></ion-datetime>
+      </ion-item>
+
+    </div>
+  </ion-card>
+  <ng-container *ngIf="getResponse == false">
+    <p class="no-data-found"> Please Apply Filter </p>
+  </ng-container>
+
+  <ng-container *ngIf="getResponse == true">
+    <div style="overflow-x:auto; margin: 20px 20px; ">
+      <table>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <ng-container *ngFor="let header of headers">
+            <th *ngIf="header != '' ">{{header}}</th>
+          </ng-container>
+        </tr>
+        <tr *ngFor="let student of student_data; let i = index;">
+          <ng-container *ngIf="student.sno != '' ">
+            <td>{{student.sno}}</td>
+            <td>{{student.name}}</td>
+            <ng-container *ngFor="let header of headers">
+              <td *ngIf="header != '' && header != currentdate ">
+                <ion-icon class="fas fa-times" color="danger"
+                  *ngIf="student?.attendances[''+header]?.label == 'absent' "></ion-icon>
+                <ion-icon class="fas fa-check" color="success"
+                  *ngIf=" student?.attendances[''+header]?.label == 'present' "></ion-icon>
+                <ion-icon class="fas fa-coffee" color="warning"
+                  *ngIf=" student?.attendances[''+header]?.label == 'half_day' "></ion-icon>
+                <ion-icon class="fas fa-history" color="secondary"
+                  *ngIf=" student?.attendances[''+header]?.label == 'late' "></ion-icon>
+              </td>
+              <td *ngIf="header == currentdate">
+                <ion-icon class="fas fa-times" color="danger"
+                  *ngIf="student.attendances[''+header].label == 'unmarked' || student?.attendances[''+header]?.label == 'absent' "
+                  (click)="changeAttendanceStatus(i,'late')"></ion-icon>
+                <ion-icon class="fas fa-check" color="success"
+                  *ngIf=" student?.attendances[''+header]?.label == 'present' "
+                  (click)="changeAttendanceStatus(i,'absent')"></ion-icon>
+                <ion-icon class="fas fa-coffee" color="warning"
+                  *ngIf="student.attendances[''+header].label == 'half_day' "
+                  (click)="changeAttendanceStatus(i,'present')"></ion-icon>
+                <ion-icon class="fas fa-history" color="secondary"
+                  *ngIf=" student?.attendances[''+header]?.label == 'late' "
+                  (click)="changeAttendanceStatus(i,'half_day')"></ion-icon>
+              </td>
+            </ng-container>
+            <td><b>{{student.monthly_count}}</b> </td>
+            <td>{{student.name}}</td>
+          </ng-container>
+          <ng-container *ngIf="student.sno == '' ">
+            <td>{{student.sno}}</td>
+            <td><b>{{student.name}}</b></td>
+            <ng-container *ngFor="let header of headers">
+              <td *ngIf="header != '' "><b>{{student?.attendances[''+header]?.count}}</b> </td>
+            </ng-container>
+            <td><b>{{student.monthly_count}}</b> </td>
+
+          </ng-container>
+
+
+        </tr>
+      </table>
+    </div>
+    <ion-item>
+      <ion-button size="default" slot="end" (click)="saveAttendanceStatusChange()">Save</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-button slot="start" (click)="MarkAllPresent()">Mark All Present</ion-button>
+      <ion-button slot="start" (click)="MarkAllAbsent()">Mark All Absent</ion-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon class="attendance-mark fas fa-times" color="danger"></ion-icon>
+      Absent
+      <ion-icon class="attendance-mark fas fa-check" color="success"></ion-icon>
+      Present
+      <ion-icon class="attendance-mark fas fa-coffee" color="warning"></ion-icon>
+      Half Day
+      <ion-icon class="attendance-mark fas fa-history" color="secondary"></ion-icon>
+      Late
+    </ion-item>
+
+  </ng-container>
+</ion-content>

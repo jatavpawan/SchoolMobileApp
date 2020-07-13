@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, MenuController, ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authservice/authentication.service';
+import { ShardServiceService } from 'src/app/services/shard-service.service';
+import { Subscription } from 'rxjs';
 // import { Status } from 'src/app/model/ResponseModel';
 
 @Component({
@@ -11,6 +13,7 @@ import { AuthenticationService } from 'src/app/services/authservice/authenticati
 })
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
+  subscription: Subscription;
 
   constructor(
     public navCtrl: NavController,
@@ -20,6 +23,7 @@ export class LoginPage implements OnInit {
     public loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
+    private shareService: ShardServiceService
   ) { }
 
   ionViewWillEnter() {
@@ -37,7 +41,6 @@ export class LoginPage implements OnInit {
         Validators.required
       ])]
     });
-    // debugger;
   }
 
   async forgotPass() {
@@ -88,37 +91,41 @@ export class LoginPage implements OnInit {
   // // //
   goToRegister() {
     this.navCtrl.navigateRoot('/register');
-  } 
+  }
 
   goToHome() {
     this.navCtrl.navigateRoot('/home-results');
   }
- 
-  loginSubmit(){
-     if(this.onLoginForm.valid){
 
-    let submitObj = {
-      "email_or_username": this.onLoginForm.get('email').value,
-      "password": this.onLoginForm.get('password').value ,
-      "mobile":"",
-      "otp":""
-    }
+  loginSubmit() {
+    if (this.onLoginForm.valid) {
 
-      this.authService.loginUser(submitObj).subscribe(resp=>{
-        // debugger;
-        if(resp.status == "success"){
+      let submitObj = {
+        "email_or_username": this.onLoginForm.get('email').value,
+        "password": this.onLoginForm.get('password').value,
+        "mobile": "",
+        "otp": ""
+      }
+      this.shareService.present();
+      this.subscription = this.authService.loginUser(submitObj).subscribe(resp => {
+        this.shareService.dismiss();
+        if (resp.status == "success") {
           this.authService.setToken(resp.token);
           this.authService.setUserdata(resp.user);
           this.navCtrl.navigateRoot('/home-results');
         }
-        else{
-          alert("Email and Password not matched");
+        else {
+          this.shareService.openToast("Email and Password not matched", "danger");
         }
-      }, error =>{
-        // debugger;
-        alert(error.error.errors.email_or_username[0]);
-      })    
-     }
+      }, error => {
+        this.shareService.dismiss();
+        this.shareService.openToast(error.error.errors.email_or_username[0], "danger");
+      })
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
