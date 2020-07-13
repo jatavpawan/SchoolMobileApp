@@ -54,6 +54,8 @@ export class StudentAttendenceComponent implements OnInit {
   current_date_attendance: Array<any> = [];
   changeAttendanceFlag: boolean = false;
   subscription: Subscription;
+  attendanceStatus: any = true;
+  
 
   constructor(
     private shareService: ShardServiceService,
@@ -70,7 +72,9 @@ export class StudentAttendenceComponent implements OnInit {
   }
 
   studentAttendancePreRequisite() {
+    this.shareService.present();
     this.subscription =  this.studentService.studentAttendancePreRequisite().subscribe(resp => {
+      this.shareService.dismiss();
       if (resp.status == "success") {
         this.attendance_method_more_than_once_types = resp.attendance_method_more_than_once_types;
         this.batch_with_subjects = resp.batch_with_subjects;
@@ -190,6 +194,7 @@ export class StudentAttendenceComponent implements OnInit {
   }
 
   changeAttendanceStatus(i, status) {
+    debugger;
     this.student_data[i].attendances[this.currentdate].label = status;
   }
 

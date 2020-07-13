@@ -75,72 +75,54 @@
   <ng-container *ngIf="getResponse == false">
     <p class="no-data-found"> Please Apply Filter </p>
   </ng-container>
-
   <ng-container *ngIf="getResponse == true">
+    <ion-item lines="none">
+      <ion-button slot="start" (click)="MarkAllPresent()">Mark All Present</ion-button>
+      <ion-button slot="start" (click)="MarkAllAbsent()">Mark All Absent</ion-button>
+    </ion-item>
     <div style="overflow-x:auto; margin: 20px 20px; ">
       <table>
         <tr>
           <th>#</th>
           <th>Name</th>
-          <ng-container *ngFor="let header of headers">
-            <th *ngIf="header != '' ">{{header}}</th>
-          </ng-container>
+          <th>Attendance</th>
         </tr>
         <tr *ngFor="let student of student_data; let i = index;">
           <ng-container *ngIf="student.sno != '' ">
             <td>{{student.sno}}</td>
             <td>{{student.name}}</td>
-            <ng-container *ngFor="let header of headers">
-              <td *ngIf="header != '' && header != currentdate ">
-                <ion-icon class="fas fa-times" color="danger"
-                  *ngIf="student?.attendances[''+header]?.label == 'absent' "></ion-icon>
-                <ion-icon class="fas fa-check" color="success"
-                  *ngIf=" student?.attendances[''+header]?.label == 'present' "></ion-icon>
-                <ion-icon class="fas fa-coffee" color="warning"
-                  *ngIf=" student?.attendances[''+header]?.label == 'half_day' "></ion-icon>
-                <ion-icon class="fas fa-history" color="secondary"
-                  *ngIf=" student?.attendances[''+header]?.label == 'late' "></ion-icon>
-              </td>
-              <td *ngIf="header == currentdate">
-                <ion-icon class="fas fa-times" color="danger"
-                  *ngIf="student.attendances[''+header].label == 'unmarked' || student?.attendances[''+header]?.label == 'absent' "
-                  (click)="changeAttendanceStatus(i,'late')"></ion-icon>
-                <ion-icon class="fas fa-check" color="success"
-                  *ngIf=" student?.attendances[''+header]?.label == 'present' "
-                  (click)="changeAttendanceStatus(i,'absent')"></ion-icon>
-                <ion-icon class="fas fa-coffee" color="warning"
-                  *ngIf="student.attendances[''+header].label == 'half_day' "
-                  (click)="changeAttendanceStatus(i,'present')"></ion-icon>
-                <ion-icon class="fas fa-history" color="secondary"
-                  *ngIf=" student?.attendances[''+header]?.label == 'late' "
-                  (click)="changeAttendanceStatus(i,'half_day')"></ion-icon>
-              </td>
-            </ng-container>
-            <td><b>{{student.monthly_count}}</b> </td>
-            <td>{{student.name}}</td>
+            <td class="attendance-data">
+                <ion-item lines="none" class="attendance-status">
+                  <ion-radio color="success" [checked]="student?.attendances[''+currentdate]?.label == 'present'" (click)="changeAttendanceStatus(i,'present')"></ion-radio>
+                  <ion-label>Present</ion-label>
+                </ion-item>
+                <ion-item lines="none" class="attendance-status">
+                  <ion-radio color="danger"  [checked]="student.attendances[''+currentdate].label == 'unmarked' || student?.attendances[''+currentdate]?.label == 'absent' " (click)="changeAttendanceStatus(i,'absent')"></ion-radio>
+                  <ion-label>Absent</ion-label>
+                </ion-item>
+                <ion-item lines="none" class="attendance-status">
+                  <ion-radio color="secondary" [checked]="student?.attendances[''+currentdate]?.label == 'late'" (click)="changeAttendanceStatus(i,'late')"></ion-radio>
+                  <ion-label>Late</ion-label>
+                </ion-item>
+                <ion-item lines="none" class="attendance-status">
+                  <ion-radio color="warning" [checked]="student?.attendances[''+currentdate]?.label == 'half_day'" (click)="changeAttendanceStatus(i,'half_day')"></ion-radio>
+                  <ion-label>Half Day</ion-label>
+                </ion-item>
+            </td>
           </ng-container>
           <ng-container *ngIf="student.sno == '' ">
             <td>{{student.sno}}</td>
             <td><b>{{student.name}}</b></td>
-            <ng-container *ngFor="let header of headers">
-              <td *ngIf="header != '' "><b>{{student?.attendances[''+header]?.count}}</b> </td>
+            <ng-container>
+              <td><b>{{student?.attendances[''+currentdate]?.count}}</b> </td>
             </ng-container>
-            <td><b>{{student.monthly_count}}</b> </td>
-
           </ng-container>
-
-
         </tr>
       </table>
     </div>
     <ion-item>
       <ion-button size="default" slot="end" (click)="saveAttendanceStatusChange()">Save</ion-button>
     </ion-item>
-    <ion-item>
-      <ion-button slot="start" (click)="MarkAllPresent()">Mark All Present</ion-button>
-      <ion-button slot="start" (click)="MarkAllAbsent()">Mark All Absent</ion-button>
-    </ion-item>
-
     <ion-item>
       <ion-icon class="attendance-mark fas fa-times" color="danger"></ion-icon>
       Absent
