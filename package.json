@@ -35,7 +35,7 @@
     "cordova-plugin-ionic-webview": "^2.5.3",
     "core-js": "^2.5.4",
     "ionicons": "4.5.5",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "node-sass": "^4.14.1",
     "rxjs": "~6.3.3",
     "uuid": "^8.2.0",
